@@ -1,0 +1,12 @@
+generated: '2026-10-07'
+method: derived
+generator: derive-webhooks.py
+source:
+- openapi/_ae-authored/contactout-openapi-generated.yml
+description: 'Event surface derived from the provider''s own OpenAPI: callbacks. No AsyncAPI document is published by the provider; this catalog
+  lists the events the contract names.'
+management_operations: []
+events:
+- event: callbackUrl
+  description: callback declared on contactInfoBulkV2BulkContactinfo
+  declared_in: callbacks

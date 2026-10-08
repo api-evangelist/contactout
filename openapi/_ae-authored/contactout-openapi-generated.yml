@@ -1,0 +1,1691 @@
+openapi: 3.1.0
+info:
+  title: ContactOut API
+  version: v1
+  summary: 'B2B contact data: people and company enrichment, search, contact checks, email verification, campaigns and usage stats.'
+  description: Welcome to ContactOut's API. Find anyone's email & phone number 10x faster with the most powerful sales and recruitment intelligence software available. (Generated from the published API reference at https://api.contactout.com; every operation carries x-source pointing at the section it was read from.)
+  contact:
+    name: ContactOut
+    url: https://contactout.com/meeting?utm_source=api_docs
+  termsOfService: https://contactout.com/terms
+  x-generated-from: documentation
+  x-generated-on: '2026-10-07'
+  x-generator: 'api-evangelist enrichment pass: deterministic parse of the Slate API reference HTML (headings, parameter tables, example blocks); the pipeline generator generate-contract-from-docs.py was run first and its path-collapse heuristic merged the literal resources linkedin/email/domain into a {v1id} template, so its output was replaced by this parse'
+externalDocs:
+  url: https://api.contactout.com
+  description: ContactOut API Reference
+servers:
+- url: https://api.contactout.com
+security:
+- apiToken: []
+tags:
+- name: LinkedIn Profile API
+- name: People Enrich API
+- name: Contact Info API - Single
+- name: Contact Info API - Bulk
+- name: Company information from domains
+- name: People Search API
+- name: People Count API
+- name: Decision Makers API
+- name: Company Search API
+- name: Email to LinkedIn API
+- name: Contact Checker API
+- name: Hashed Email API
+- name: Email Verifier API
+- name: Campaigns API
+- name: API Usage Stats
+paths:
+  /v1/linkedin/enrich:
+    get:
+      summary: from LinkedIn URL
+      tags:
+      - LinkedIn Profile API
+      operationId: linkedinProfileFromLinkedinUrl
+      description: GET https://api.contactout.com/v1/linkedin/enrich?{profile=}
+      x-source: https://api.contactout.com#enrich-linkedin-profile-http-request
+      x-section: LinkedIn Profile API from LinkedIn URL
+      parameters:
+      - name: profile
+        in: query
+        required: true
+        schema:
+          type: string
+        description: The fully formed URL of the LinkedIn profile. URL must begin with http and must contain linkedin.com/in/ or linkedin.com/pub/ (string, URL encoded, required)
+      - name: profile_only
+        in: query
+        required: false
+        schema:
+          type: boolean
+          default: 'false'
+        description: 'If set to true, returns the profile data without contact information. (boolean, optional, default: false)'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LinkedinProfileFromLinkedinUrlResponse'
+        '400':
+          $ref: '#/components/responses/BadCredentials'
+        '401':
+          $ref: '#/components/responses/BadRequest'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+      x-cost:
+      - Consumes 1 email credit if email is found and 1 phone credit if phone number is found.
+      - Consumes 1 search credit if profile_only is set to true or if there is no contact information available for the requested profile.
+  /v1/email/enrich:
+    get:
+      summary: from email address
+      tags:
+      - LinkedIn Profile API
+      operationId: linkedinProfileFromEmailAddress
+      description: GET https://api.contactout.com/v1/email/enrich?{email=}
+      x-source: https://api.contactout.com#enrich-email-http-request
+      x-section: LinkedIn Profile API from email address
+      parameters:
+      - name: email
+        in: query
+        required: true
+        schema:
+          type: string
+        description: Email Address (string, required)
+      - name: include
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Data to be returned. Currently support work_email (string, optional)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LinkedinProfileFromEmailAddressResponse'
+        '400':
+          $ref: '#/components/responses/BadCredentials'
+        '401':
+          $ref: '#/components/responses/BadRequest'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+      x-cost:
+      - Consumes 1 email credit if email is found and 1 phone credit if phone number is found.
+  /v1/people/enrich:
+    post:
+      summary: People Enrich API
+      tags:
+      - People Enrich API
+      operationId: peopleEnrich
+      description: POST https://api.contactout.com/v1/people/enrich
+      x-source: https://api.contactout.com#people-enrich-http-request
+      x-section: People Enrich API
+      parameters: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PeopleEnrichResponse'
+        '400':
+          $ref: '#/components/responses/BadCredentials'
+        '401':
+          $ref: '#/components/responses/BadRequest'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PeopleEnrichRequest'
+      x-cost:
+      - Consumes 1 search credit if a profile was found.
+      - Consumes 1 email credit if email is found and 1 phone credit if phone number is found.
+  /v1/people/linkedin:
+    get:
+      summary: from LinkedIn Profile
+      tags:
+      - Contact Info API - Single
+      operationId: contactInfoSingleFromLinkedinProfile
+      description: GET https://api.contactout.com/v1/people/linkedin?{profile=&include_phone=}
+      x-source: https://api.contactout.com#contactinfo-from-linkedin-http-request
+      x-section: Contact Info API - Single from LinkedIn Profile
+      parameters:
+      - name: profile
+        in: query
+        required: true
+        schema:
+          type: string
+        description: 'The fully formed URL of the LinkedIn profile. URL must begin with http and must contain linkedin.com/in/ or linkedin.com/pub/ (profile: (string, URL encoded, required))'
+      - name: include_phone
+        in: query
+        required: false
+        schema:
+          type: boolean
+        description: If set to true, it will include phone information in the response and deduct phone credits. (boolean, optional, Defaults to false)
+      - name: email_type
+        in: query
+        required: false
+        schema:
+          type: string
+        description: email_type=personal — Returns only personal emails  email_type=work — Returns only work emails  email_type=personal,work — Returns both personal and work emails  email_type=none — Returns no emails and consumes no email credits  By default, both personal and work emails are returned. (string, optional)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContactInfoSingleFromLinkedinProfileResponse'
+        '400':
+          $ref: '#/components/responses/BadCredentials'
+        '401':
+          $ref: '#/components/responses/BadRequest'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+      x-cost:
+      - Consumes 1 email credit if email is found and 1 phone credit if phone number is found (and include_phone is set to true).
+  /v1/people/linkedin/batch:
+    post:
+      summary: V1 Bulk ContactInfo
+      tags:
+      - Contact Info API - Bulk
+      operationId: contactInfoBulkV1BulkContactinfo
+      description: POST https://api.contactout.com/v1/people/linkedin/batch
+      x-source: https://api.contactout.com#v1-bulk-contactinfo-http-request
+      x-section: Contact Info API - Bulk V1 Bulk ContactInfo
+      parameters: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContactInfoBulkV1BulkContactinfoResponse'
+        '400':
+          $ref: '#/components/responses/BadCredentials'
+        '401':
+          $ref: '#/components/responses/BadRequest'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContactInfoBulkV1BulkContactinfoRequest'
+  /v2/people/linkedin/batch:
+    post:
+      summary: V2 Bulk ContactInfo
+      tags:
+      - Contact Info API - Bulk
+      operationId: contactInfoBulkV2BulkContactinfo
+      description: 'POST https://api.contactout.com/v2/people/linkedin/batch
+
+        Initiate a bulk contact info lookup.'
+      x-source: https://api.contactout.com#v2-bulk-contactinfo-post-http-request
+      x-section: Contact Info API - Bulk V2 Bulk ContactInfo
+      parameters: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContactInfoBulkV2BulkContactinfoResponse'
+        '400':
+          $ref: '#/components/responses/BadCredentials'
+        '401':
+          $ref: '#/components/responses/BadRequest'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContactInfoBulkV2BulkContactinfoRequest'
+      callbacks:
+        callbackUrl:
+          '{$request.body#/callback_url}':
+            post:
+              summary: Job result delivered to callback_url
+              description: When you include a callback_url in your initial POST request, we deliver the results to that URL automatically once the job finishes. The payload is sent as a POST request with a JSON body containing the fields below.
+              requestBody:
+                content:
+                  application/json:
+                    schema:
+                      type: object
+                      properties:
+                        job_id:
+                          type: string
+                          description: The same job_id returned by the initial POST response. Use this to match the webhook delivery to the original request. (string)
+                        profiles:
+                          type: object
+                          description: An object containing multiple LinkedIn profiles and their associated contact information.emails - An array of all email addresses associated with the LinkedIn profile.personal_emails - An array of personal email addresses associated with the LinkedIn profile.work_emails - An array of work email addresses associated with the LinkedIn profile.phones - An array of phone numbers associated with the LinkedIn profile (if include_phone is true). (object)
+              responses:
+                '200':
+                  description: Your endpoint acknowledges the delivery
+  /v2/people/linkedin/batch/{jobId}:
+    get:
+      summary: V2 Bulk ContactInfo
+      tags:
+      - Contact Info API - Bulk
+      operationId: contactInfoBulkV2BulkContactinfoGet
+      description: 'GET https://api.contactout.com/v2/people/linkedin/batch/{job_id}
+
+        Check job status and retrieve contact info results using the job_id.'
+      x-source: https://api.contactout.com#v2-bulk-contactinfo-get-http-request
+      x-section: Contact Info API - Bulk V2 Bulk ContactInfo
+      parameters:
+      - name: jobId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContactInfoBulkV2BulkContactinfoGetResponse'
+        '400':
+          $ref: '#/components/responses/BadCredentials'
+        '401':
+          $ref: '#/components/responses/BadRequest'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+  /v1/domain/enrich:
+    post:
+      summary: Company information from domains
+      tags:
+      - Company information from domains
+      operationId: companyInformationFromDomains
+      description: POST https://api.contactout.com/v1/domain/enrich
+      x-source: https://api.contactout.com#enrich-domain-http-request
+      x-section: Company information from domains
+      parameters: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompanyInformationFromDomainsResponse'
+        '400':
+          $ref: '#/components/responses/BadCredentials'
+        '401':
+          $ref: '#/components/responses/BadRequest'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompanyInformationFromDomainsRequest'
+      x-cost:
+      - Consumes 1 search credit for each company found.
+  /v1/people/search:
+    post:
+      summary: People Search API
+      tags:
+      - People Search API
+      operationId: peopleSearch
+      description: 'POST https://api.contactout.com/v1/people/search
+
+
+        Boolean Equations: Few input parameters mentioned in the table above can accept boolean equations as input. Check the "Accepts Boolean" column to know which input fields can accept boolean equations. You can use boolean equations to filter based on a specific criteria. e.g. If you are looking for profiles who have the skills ReactJS and Python, but not Java, you can format the skills parameter as: { "skills": ["(ReactJS AND Python) NOT Java"] }. Always add brackets to ensure the boolean logic is applied correctly. The same logic will apply for the rest of the mentioned paramters. The supported boolean operators are: Boolean operators must be capitalized. Lowercase and, or, and not are treated as part of the search phrase, not as operators. For example, Financial Planning and Analysis is searched as a single phrase. For the industry parameter, prefix a value with NOT to exclude that industry (e.g. { "industry": ["NOT Computer Software", "Banking"] } returns profiles in Banking but
+        not Computer Software). AND and OR are not supported for industry filters.'
+      x-source: https://api.contactout.com#search-profiles-http-request
+      x-section: People Search API
+      parameters: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PeopleSearchResponse'
+              example:
+                status_code: 200
+                metadata:
+                  page: 1
+                  page_size: 25
+                  total_results: 0
+                profiles:
+                  https://linkedin.com/in/at-JqjtXv:
+                    li_vanity: at-JqjtXv
+                    title: Research Assistant
+                    contact_availability:
+                      personal_email: true
+                      work_email: true
+                      phone: true
+                    contact_info:
+                      emails: []
+                      personal_emails: []
+                      work_emails: []
+                      work_email_status: []
+                      phones: []
+        '400':
+          $ref: '#/components/responses/BadCredentials'
+        '401':
+          $ref: '#/components/responses/BadRequest'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PeopleSearchRequest'
+      x-cost:
+      - Consumes 1 search credit for each profile returned.
+      - Consumes 1 email/phone credit for every profile where email/phone info is found, if reveal_info=true is specified.
+  /v1/people/count:
+    post:
+      summary: People Count API
+      tags:
+      - People Count API
+      operationId: peopleCount
+      description: POST https://api.contactout.com/v1/people/count
+      x-source: https://api.contactout.com#http-request
+      x-section: People Count API
+      parameters: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PeopleCountResponse'
+        '400':
+          $ref: '#/components/responses/BadCredentials'
+        '401':
+          $ref: '#/components/responses/BadRequest'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+      x-cost:
+      - Does not consume credits
+      x-access:
+      - Only available to paid users
+  /v1/people/decision-makers:
+    get:
+      summary: Decision Makers API
+      tags:
+      - Decision Makers API
+      operationId: decisionMakers
+      description: GET https://api.contactout.com/v1/people/decision-makers?{domain=&name=&linkedin_url=&reveal_info=}
+      x-source: https://api.contactout.com#usage-stats-http-request
+      x-section: Decision Makers API
+      parameters:
+      - name: linkedin_url
+        in: query
+        required: false
+        schema:
+          type: string
+        description: The fully formed URL of the company's LinkedIn profile. URL must begin with http and must contain linkedin.com/company/. Accepts both the numeric or string version of the URL, e.g. https://linkedin.com/company/contactout or https://linkedin.com/company/27090845 (string, optional)
+      - name: domain
+        in: query
+        required: false
+        schema:
+          type: string
+        description: The domain name of the company's website, e.g. example.com (string, optional)
+      - name: name
+        in: query
+        required: false
+        schema:
+          type: string
+        description: The name of the company (string, optional)
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+        description: Provides results for the given page (integer, optional)
+      - name: reveal_info
+        in: query
+        required: false
+        schema:
+          type: boolean
+          default: 'false'
+        description: 'If set to true, contact_info will contain the emails and phone numbers of the profile and credits will be charged (boolean, default: false)'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DecisionMakersResponse'
+        '400':
+          $ref: '#/components/responses/BadCredentials'
+        '401':
+          $ref: '#/components/responses/BadRequest'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+      x-cost:
+      - Consumes 1 search credit for each profile returned.
+      - Consumes 1 email/phone credit for every profile where email/phone info is found, if reveal_info=true is specified.
+  /v1/company/search:
+    post:
+      summary: Company Search API
+      tags:
+      - Company Search API
+      operationId: companySearch
+      description: POST https://api.contactout.com/v1/company/search
+      x-source: https://api.contactout.com#company-profiles-http-request
+      x-section: Company Search API
+      parameters: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompanySearchResponse'
+        '400':
+          $ref: '#/components/responses/BadCredentials'
+        '401':
+          $ref: '#/components/responses/BadRequest'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompanySearchRequest'
+      x-cost:
+      - Consumes 1 search credit for each company returned.
+  /v1/people/person:
+    get:
+      summary: Email to LinkedIn API
+      tags:
+      - Email to LinkedIn API
+      operationId: emailToLinkedin
+      description: GET https://api.contactout.com/v1/people/person?{email=}
+      x-source: https://api.contactout.com#linkedin-profile-from-email-http-request
+      x-section: Email to LinkedIn API
+      parameters:
+      - name: email
+        in: query
+        required: true
+        schema:
+          type: string
+        description: Email Address (string, required)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmailToLinkedinResponse'
+        '400':
+          $ref: '#/components/responses/BadCredentials'
+        '401':
+          $ref: '#/components/responses/BadRequest'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+      x-cost:
+      - Consumes 1 email credit if profile is found.
+  /v1/people/linkedin/personal_email_status:
+    get:
+      summary: Personal Email Checker
+      tags:
+      - Contact Checker API
+      operationId: contactCheckerPersonalEmailChecker
+      description: GET https://api.contactout.com/v1/people/linkedin/personal_email_status?{profile=}
+      x-source: https://api.contactout.com#personal-checker-http-request
+      x-section: Contact Checker API Personal Email Checker
+      parameters:
+      - name: profile
+        in: query
+        required: true
+        schema:
+          type: string
+        description: 'The fully formed URL of the LinkedIn profile. URL must begin with http and must contain linkedin.com/in/ or linkedin.com/pub/ (profile: (string, URL encoded, required))'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContactCheckerPersonalEmailCheckerResponse'
+        '400':
+          $ref: '#/components/responses/BadCredentials'
+        '401':
+          $ref: '#/components/responses/BadRequest'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+      x-cost:
+      - Does not consume credits
+      x-access:
+      - Only available to paid users
+  /v1/people/linkedin/work_email_status:
+    get:
+      summary: Work Email Checker
+      tags:
+      - Contact Checker API
+      operationId: contactCheckerWorkEmailChecker
+      description: GET https://api.contactout.com/v1/people/linkedin/work_email_status?{profile=}
+      x-source: https://api.contactout.com#work-checker-http-request
+      x-section: Contact Checker API Work Email Checker
+      parameters:
+      - name: profile
+        in: query
+        required: true
+        schema:
+          type: string
+        description: 'The fully formed URL of the LinkedIn profile. URL must begin with http and must contain linkedin.com/in/ or linkedin.com/pub/. (profile: (string, URL encoded, required))'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContactCheckerWorkEmailCheckerResponse'
+        '400':
+          $ref: '#/components/responses/BadCredentials'
+        '401':
+          $ref: '#/components/responses/BadRequest'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+      x-cost:
+      - Does not consume credits
+      x-access:
+      - Only available to paid users
+  /v1/people/linkedin/phone_status:
+    get:
+      summary: Phone Number Checker
+      tags:
+      - Contact Checker API
+      operationId: contactCheckerPhoneNumberChecker
+      description: GET https://api.contactout.com/v1/people/linkedin/phone_status?{profile=}
+      x-source: https://api.contactout.com#phone-checker-http-request
+      x-section: Contact Checker API Phone Number Checker
+      parameters:
+      - name: profile
+        in: query
+        required: true
+        schema:
+          type: string
+        description: 'The fully formed URL of the LinkedIn profile. URL must begin with http and must contain linkedin.com/in/ or linkedin.com/pub/ (profile: (string, URL encoded, required))'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContactCheckerPhoneNumberCheckerResponse'
+        '400':
+          $ref: '#/components/responses/BadCredentials'
+        '401':
+          $ref: '#/components/responses/BadRequest'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+      x-cost:
+      - Does not consume credits
+      x-access:
+      - Only available to paid users
+  /v1/people/identifiers:
+    post:
+      summary: Hashed Email API
+      tags:
+      - Hashed Email API
+      operationId: hashedEmail
+      description: POST https://api.contactout.com/v1/people/identifiers
+      x-source: https://api.contactout.com#email-identifiers-api-http-request
+      x-section: Hashed Email API
+      parameters: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HashedEmailResponse'
+        '400':
+          $ref: '#/components/responses/BadCredentials'
+        '401':
+          $ref: '#/components/responses/BadRequest'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HashedEmailRequest'
+      x-cost:
+      - Consumes 1 email credit per profile if an email hash is returned.
+  /v1/email/verify:
+    get:
+      summary: Single
+      tags:
+      - Email Verifier API
+      operationId: emailVerifierSingle
+      description: GET https://api.contactout.com/v1/email/verify?{email=}
+      x-source: https://api.contactout.com#email-verifier-http-request
+      x-section: Email Verifier API Single
+      parameters:
+      - name: email
+        in: query
+        required: true
+        schema:
+          type: string
+        description: Email Address (string, required)
+      responses:
+        '200':
+          description: Successful response
+        '400':
+          $ref: '#/components/responses/BadCredentials'
+        '401':
+          $ref: '#/components/responses/BadRequest'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+      x-cost:
+      - Consumes 1 “verifier” credit if result is either valid, invalid or accept_all
+  /v1/email/verify/batch:
+    post:
+      summary: Bulk
+      tags: &id001
+      - Email Verifier API
+      operationId: emailVerifierBulk
+      description: 'POST https://api.contactout.com/v1/email/verify/batch
+
+        GET https://api.contactout.com/v1/email/verify/batch/{job_uuid}'
+      x-source: https://api.contactout.com#v1-bulk-email-verifier-http-request
+      x-section: Email Verifier API Bulk
+      parameters: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmailVerifierBulkResponse'
+        '400':
+          $ref: '#/components/responses/BadCredentials'
+        '401':
+          $ref: '#/components/responses/BadRequest'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmailVerifierBulkRequest'
+      x-cost: &id002
+      - Consumes 1 “verifier” credit per email if result is either valid, invalid or accept_all
+  /v1/email/verify/batch/{jobUuid}:
+    get:
+      summary: Bulk (status)
+      tags: *id001
+      operationId: emailVerifierBulkGet
+      description: 'POST https://api.contactout.com/v1/email/verify/batch
+
+        GET https://api.contactout.com/v1/email/verify/batch/{job_uuid}'
+      x-source: https://api.contactout.com#v1-bulk-email-verifier-http-request
+      x-section: Email Verifier API Bulk
+      parameters:
+      - name: jobUuid
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+        '400':
+          $ref: '#/components/responses/BadCredentials'
+        '401':
+          $ref: '#/components/responses/BadRequest'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+      x-cost: *id002
+  /v1/campaigns:
+    get:
+      summary: List Campaigns
+      tags:
+      - Campaigns API
+      operationId: campaignsListCampaigns
+      description: GET https://api.contactout.com/v1/campaigns
+      x-source: https://api.contactout.com#campaigns-list-http-request
+      x-section: Campaigns API List Campaigns
+      parameters:
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: '1'
+        description: 'The page number to retrieve. (integer, optional, default: 1)'
+      - name: page_size
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: '25'
+        description: 'The number of campaigns to return per page. (integer, optional, default: 25, max:50)'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CampaignsListCampaignsResponse'
+        '400':
+          $ref: '#/components/responses/BadCredentials'
+        '401':
+          $ref: '#/components/responses/BadRequest'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+  /v1/campaigns/{campaignId}:
+    get:
+      summary: Get Campaign
+      tags:
+      - Campaigns API
+      operationId: campaignsGetCampaign
+      description: GET https://api.contactout.com/v1/campaigns/{campaign_id}
+      x-source: https://api.contactout.com#campaigns-show-http-request
+      x-section: Campaigns API Get Campaign
+      parameters:
+      - name: campaignId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The campaign_id of the campaign to retrieve. (string, required)
+      - name: include_stats
+        in: query
+        required: false
+        schema:
+          type: boolean
+          default: 'false'
+        description: 'If set to true, the response includes a stats object with campaign performance metrics. (boolean, optional, default: false)'
+      responses:
+        '200':
+          description: Successful response
+        '400':
+          $ref: '#/components/responses/BadCredentials'
+        '401':
+          $ref: '#/components/responses/BadRequest'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+  /v1/campaigns/{campaignId}/recipients:
+    post:
+      summary: Add Recipients
+      tags:
+      - Campaigns API
+      operationId: campaignsAddRecipients
+      description: POST https://api.contactout.com/v1/campaigns/{campaign_id}/recipients
+      x-source: https://api.contactout.com#campaigns-recipients-add-http-request
+      x-section: Campaigns API Add Recipients
+      parameters:
+      - name: campaignId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The campaign_id of the campaign to add recipients to. (string, required)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CampaignsAddRecipientsResponse'
+        '400':
+          $ref: '#/components/responses/BadCredentials'
+        '401':
+          $ref: '#/components/responses/BadRequest'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CampaignsAddRecipientsRequest'
+    delete:
+      summary: Remove Recipients
+      tags:
+      - Campaigns API
+      operationId: campaignsRemoveRecipients
+      description: DELETE https://api.contactout.com/v1/campaigns/{campaign_id}/recipients
+      x-source: https://api.contactout.com#campaigns-recipients-remove-http-request
+      x-section: Campaigns API Remove Recipients
+      parameters:
+      - name: campaignId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The campaign_id of the campaign to remove recipients from. (string, required)
+      responses:
+        '200':
+          description: Successful response
+        '400':
+          $ref: '#/components/responses/BadCredentials'
+        '401':
+          $ref: '#/components/responses/BadRequest'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CampaignsRemoveRecipientsRequest'
+  /v1/campaigns/{campaignId}/start:
+    post:
+      summary: Start Campaign
+      tags:
+      - Campaigns API
+      operationId: campaignsStartCampaign
+      description: POST https://api.contactout.com/v1/campaigns/{campaign_id}/start
+      x-source: https://api.contactout.com#campaigns-start-http-request
+      x-section: Campaigns API Start Campaign
+      parameters:
+      - name: campaignId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The campaign_id of the campaign to start. (string, required)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CampaignsStartCampaignResponse'
+              example:
+                status_code: 200
+                message: Campaign is already active.
+                data:
+                  id: pEVRKd
+                  status: active
+        '400':
+          $ref: '#/components/responses/BadCredentials'
+        '401':
+          $ref: '#/components/responses/BadRequest'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+  /v1/campaigns/{campaignId}/stop:
+    post:
+      summary: Stop Campaign
+      tags:
+      - Campaigns API
+      operationId: campaignsStopCampaign
+      description: POST https://api.contactout.com/v1/campaigns/{campaign_id}/stop
+      x-source: https://api.contactout.com#campaigns-stop-http-request
+      x-section: Campaigns API Stop Campaign
+      parameters:
+      - name: campaignId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The campaign_id of the campaign to stop. (string, required)
+      responses:
+        '200':
+          description: Successful response
+        '400':
+          $ref: '#/components/responses/BadCredentials'
+        '401':
+          $ref: '#/components/responses/BadRequest'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+  /v1/stats:
+    get:
+      summary: API Usage Stats
+      tags:
+      - API Usage Stats
+      operationId: usageStats
+      description: GET https://api.contactout.com/v1/stats?period=2023-04
+      x-source: https://api.contactout.com#usage-stats-http-request
+      x-section: API Usage Stats
+      parameters:
+      - name: period
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Accepts month in YYYY-MM format, which returns the stats of the given month (string, YYYY-MM format, defaults to current month)
+      responses:
+        '200':
+          description: Successful response
+        '400':
+          $ref: '#/components/responses/BadCredentials'
+        '401':
+          $ref: '#/components/responses/BadRequest'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+components:
+  schemas:
+    LinkedinProfileFromLinkedinUrlResponse:
+      type: object
+      properties:
+        status_code:
+          type: integer
+          description: The HTTP status code of the response. Indicates the success or failure of the API request. (integer)
+        profile:
+          type: object
+          description: Contains profile details related to the URLurl - The URL of the LinkedIn profile.email - An array of email addresses associated with the profile.work_email - An array of work email addresses associated with the profile.personal_email An array of personal email addresses associated with the profile.phone - An array of phone numbers associated with the profile.github - An array of GitHub usernames associated with the profile.twitter - An array of Twitter usernames associated with the profile.full_name - The full name of the profile owner.headline The headline or job title of the profile owner.industry - The industry in which the profile owner works.company - An object containing information about the current company of the profile owner, including name, URL, website, and headquarters location.location - The location of the profile owner.summary - A summary or description of the profile owner's professional background.experience - An array of objects containing details
+            about the profile owner's work experience, including start and end dates, job title, description, and company LinkedIn URL.education - An array of objects containing details about the profile owner's education, including institution name, major, start and end dates, degrees, and profile URL.skills - An array of skills associated with the profile owner.certifications - An array of objects containing the certifications of the profile. Includes details like certification name, company, authority, license number and date.publications - An array of objects containing the publications of the profile. Includes details like publication name, description and date.projects - An array of objects containing the project details of the profile. Includes details like the project title, description, start date/month and end date/month.volunteering_experiences - An array of objects containing the volunteering experience details of the profile. Includes details like the volunteer role, organization
+            name, cause, start date/month and end date/month.followers - The number of LinkedIn followers the profile has.job_function - The functional area of the profile owner's current role (e.g., Engineering, Marketing, Sales).seniority - The seniority level of the profile owner's current role (e.g., Entry Level, Manager, Vice President).work_status - The current employment status of the profile owner ("open_to_work" or null).profile_picture_url - The URL of the profile picture of the profile owner.updated_at - The date and time when the profile was last updated. (object)
+    LinkedinProfileFromEmailAddressResponse:
+      type: object
+      properties:
+        status_code:
+          type: integer
+          description: The HTTP status code of the response. Indicates the success or failure of the API request. (integer)
+        profile:
+          type: object
+          description: object containing all profile details associated with the email address. Also includes phone number if available.email - The user's personal email address.workEmail - The user's work email address. (if include=work_email in request)workEmailStatus - The status of the work email address, whether it's verified or unverifiedfullName - The full name of the user.headline - The job title or professional headline of the user.industry - The industry in which the user works.linkedinUrl - The LinkedIn profile URL of the user.profilePictureUrl - The profile picture URL of the user.confidenceLevel - Confidence level in the accuracy of the profile information.altMatches - Alternative matches or suggestions related to the user's profile.phone - The user's phone number.twitter - The user's Twitter handle.github - The user's GitHub username.company - An object containing information about the user's current company.name - The name of the user's company.url - The LinkedIn URL of the
+            company.website - The website URL of the company.headquarter- Location of the company's headquarters.locations - An array containing details of the company's locations.location - The current location of the user.summary - A brief summary of the user's professional experience and skills.experience - An array containing details of the user's work experience.education - An array containing details of the user's educational background.skills - An array containing the user's skills and expertise.certifications - An array of objects containing the certifications of the profile. Includes details like certification name, company, authority, license number and date.publications - An array of objects containing the publications of the profile. Includes details like publication name, description and date.projects - An array of objects containing the project details of the profile. Includes details like the project title, description, start date/month and end date/month.volunteeringExperiences
+            - An array of objects containing the volunteering experience details of the profile. Includes details like the volunteer role, organization name, cause, start date/month and end date/month.followers - The number of LinkedIn followers the profile has.updatedAt - The date and time when the profile was last updated. (object)
+    PeopleEnrichRequest:
+      type: object
+      properties:
+        linkedin_url:
+          type: string
+          description: LinkedIn profile URL (string, optional)
+        email:
+          type: string
+          description: Email address (string, optional)
+        phone:
+          type: string
+          description: Phone number (string, optional)
+        full_name:
+          type: string
+          description: Full name of the person (string, optional)
+        first_name:
+          type: string
+          description: First name (must be used with last_name) (string, optional)
+        last_name:
+          type: string
+          description: Last name (must be used with first_name) (string, optional)
+        company:
+          type: array
+          items: {}
+          description: Array of company names (array, optional, max:10)
+        company_domain:
+          type: array
+          items: {}
+          description: Array of company domains (array, optional, max:10)
+        education:
+          type: array
+          items: {}
+          description: Array of educational institutions (array, optional, max:10)
+        location:
+          type: string
+          description: Location/city (string, optional)
+        job_title:
+          type: string
+          description: Job title (string, optional)
+        ? ''
+        : type: string
+        include:
+          type: array
+          items: {}
+          description: 'Data to include: work_email, personal_email, phone (array, optional)'
+    PeopleEnrichResponse:
+      type: object
+      properties:
+        status_code:
+          type: integer
+          description: The HTTP status code of the response. Indicates the success or failure of the API request. (integer)
+        profile:
+          type: object
+          description: Object containing all profile details associated with the provided parameters.email - The user's personal email address.workEmail - The user's work email address (if include=work_email in request).workEmailStatus - The status of the work email address, whether it's verified or unverified.fullName - The full name of the user.headline - The job title or professional headline of the user.industry - The industry in which the user works.linkedinUrl - The LinkedIn profile URL of the user.profilePictureUrl - The profile picture URL of the user.confidenceLevel - Confidence level in the accuracy of the profile information.altMatches - Alternative matches or suggestions related to the user's profile.phone - The user's phone number.twitter - The user's Twitter handle.github - The user's GitHub username.company - An object containing information about the user's current company including name, URL, website, headquarters, locations, and other company details.location - The current
+            location of the user.summary - A brief summary of the user's professional experience and skills.experience - An array containing details of the user's work experience.education - An array containing details of the user's educational background.skills - An array containing the user's skills and expertise.certifications - An array of objects containing the certifications of the profile.publications - An array of objects containing the publications of the profile.projects - An array of objects containing the project details of the profile.volunteering_experiences - An array of objects containing the volunteering experience details of the profile.followers - The number of LinkedIn followers the profile has.jobFunction - The functional area of the user's current role (e.g., Engineering, Marketing, Sales).seniority - The seniority level of the user's current role (e.g., Entry Level, Manager, Vice President).workStatus - The current employment status of the user ("open_to_work" or null).updatedAt
+            - The date and time when the profile was last updated. (object)
+    ContactInfoSingleFromLinkedinProfileResponse:
+      type: object
+      properties:
+        status_code:
+          type: integer
+          description: The HTTP status code of the response. (integer)
+        profile:
+          type: object
+          description: An object containing contact details for the LinkedIn profile. url - The URL of the LinkedIn profile.email - An array of email addresses associated with the profile.work_email - An array of work email addresses.work_email_status - A dictionary indicating the verification status of work emails.personal_email - An array of personal email addresses.phone - An array of phone numbers associated with the profile.github - An array of GitHub usernames associated with the profile. (object)
+    ContactInfoBulkV1BulkContactinfoRequest:
+      type: object
+      properties:
+        profiles:
+          type: array
+          items: {}
+          description: An array of LinkedIn profile URLs. URL must begin with http and must contain linkedin.com/in/ or linkedin.com/pub/ (Array, required, max:100)
+        include_phone:
+          type: boolean
+          default: 'false'
+          description: 'If set to true, phone numbers will be included in the response if available. Requires phone credits. (Boolean, optional, default: false)'
+        email_type:
+          type: string
+          description: email_type=personal — Returns only personal emails  email_type=work — Returns only work emails  email_type=personal,work — Returns both personal and work emails  By default, both personal and work emails are returned. (string, optional)
+      required:
+      - profiles
+    ContactInfoBulkV1BulkContactinfoResponse:
+      type: object
+      properties:
+        status_code:
+          type: integer
+          description: The HTTP status code of the response. Indicates the success or failure of the API request. (integer)
+        profiles:
+          type: object
+          description: Keys are LinkedIn profile URLs from the request.If include_phone is false or omitted, each value is an array of email addresses.If include_phone is true, each value is an object with emails and phones arrays.Inputs that omit http or fail validation still return an entry using the matching array or object shape above. (object)
+    ContactInfoBulkV2BulkContactinfoRequest:
+      type: object
+      properties:
+        callback_url:
+          type: string
+          description: A URL where the results will be posted once the enrichment operation is completed. (String, optional)
+        profiles:
+          type: array
+          items: {}
+          description: An array of LinkedIn profile URLs. URL must begin with http and must contain linkedin.com/in/ or linkedin.com/pub/ (Array, required, Max:1000)
+        include_phone:
+          type: boolean
+          default: 'false'
+          description: 'If set to true, phone numbers will be included in the response if available. Requires phone credits. (Boolean, optional, default: false)'
+        email_type:
+          type: string
+          description: email_type=personal — Returns only personal emails  email_type=work — Returns only work emails  email_type=personal,work — Returns both personal and work emails  email_type=none — Returns no emails and consumes no email credits  By default, both personal and work emails are returned. (string, optional)
+      required:
+      - profiles
+    ContactInfoBulkV2BulkContactinfoResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          description: The initial job status (e.g., QUEUED). (string)
+        job_id:
+          type: string
+          description: The unique identifier for the bulk job. (string)
+    ContactInfoBulkV2BulkContactinfoGetResponse:
+      type: object
+      properties:
+        uuid:
+          type: string
+          description: The unique identifier for the bulk job. This is the same value as job_id from the POST response. Use it to call GET https://api.contactout.com/v2/people/linkedin/batch/{job_id}. (string)
+        status:
+          type: string
+          description: The status of the email lookup request (e.g., SENT indicating the request has been sent) (string)
+        result:
+          type: object
+          description: An object containing multiple LinkedIn profiles and their associated contact information.emails - An array of all email addresses associated with the LinkedIn profile.personal_emails - An array of personal email addresses associated with the LinkedIn profile.work_emails - An array of work email addresses associated with the LinkedIn profile.phones - An array of phone numbers associated with the LinkedIn profile (if include_phone is true). (object)
+    CompanyInformationFromDomainsRequest:
+      type: object
+      properties:
+        domains:
+          type: array
+          items: {}
+          description: 'An array of domain names. Each domain should be in a valid format, for ex: example.com (array, required, max:30)'
+      required:
+      - domains
+    CompanyInformationFromDomainsResponse:
+      type: object
+      properties:
+        status_code:
+          type: integer
+          description: HTTP status code indicating the success or failure of the request. (integer)
+        companies:
+          type: object
+          description: An object containing information about the company associated with the provided domain.company_domain - The domain name of the company, serving as the key for the company object.li_vanity-LinkedIn vanity URL for the company.name - Name of the company.domain - Domain name of the company.description - Brief description of the company.website - URL of the company's website.logo_url - URL of the company's logo image.type - Type of the company (e.g., Privately Held, Public).headquarter - Headquarters location of the company.country - Country where the company is located.size - Size of the company (e.g., number of employees).founded_at - Year the company was founded.locations - Array containing locations where the company operates.city - City of the location.country - Country of the location.isPrimary - Indicates if this location is the primary one.industry - Industry in which the company operates.specialties - Specialties or areas of expertise of the companytechnologies
+            - Array of technologies used by the company.revenue - Revenue of the company.employees - Number of employees on LinkedIn.followers - Number of LinkedIn followers.funding - Funding summary object. Contains total_funding_usd, rounds, funding_status, latest_date, number_of_funding_rounds. (object)
+    PeopleSearchRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the profile (text)
+        job_title:
+          type: array
+          items: {}
+          description: Accepts an array of job titles. (array, max:50)
+        past_job_title:
+          type: array
+          items: {}
+          description: 'Returns profiles that held these job titles in past (non-current) roles. Cannot be combined with current_titles_only: false. Cannot be combined with match_experience when both job_title and company are set. (array, max:50)'
+        job_function:
+          type: array
+          items: {}
+          description: Accepts an array of job functions to filter profiles by their functional area (e.g., Engineering, Marketing, Sales, Finance). Accepted values list (array, max:50)
+        seniority:
+          type: array
+          items: {}
+          description: Accepts an array of seniority levels to filter profiles by their career level. Accepted values list (array, max:50)
+        current_titles_only:
+          type: boolean
+          default: 'true'
+          description: 'Returns profiles matching the current job title. If specified false, the response will return profiles matching the current or past job title. (boolean, default: true)'
+        include_related_job_titles:
+          type: boolean
+          default: 'false'
+          description: 'Returns profiles with related job titles (boolean, default: false)'
+        match_experience:
+          type: string
+          default: current
+          description: 'Ensures job_title and company match in the same experience. current – Returns profiles that match the current experience.past – Returns profiles that match any past experience.both – Returns profiles matching either current or past experience.If set, current_titles_only and company_filter should not be used; otherwise, an error is returned. (string, default: current)'
+        skills:
+          type: array
+          items: {}
+          description: Accepts an array of skills (array, max:50)
+        languages:
+          type: array
+          items: {}
+          description: Accepts an array of language objects. Each object must have a language field (required string) and optionally a proficiency field (array of strings). If proficiency is not provided, any proficiency level is accepted. Accepted values list for proficiency. (array, max:50)
+        education:
+          type: array
+          items: {}
+          description: Accepts an array of schools/degrees (array, max:50)
+        educations:
+          type: array
+          items: {}
+          description: 'Accepts an array of education objects. Each object can have optional fields: school_name (string), field_of_study (string), and location (string). At least one field must be provided. (array, max:50)'
+        location:
+          type: array
+          items: {}
+          description: Accepts an array of locations (array, max:50)
+        location_radius:
+          type: integer
+          description: Search radius in miles (1-500). Only works when location is provided and the location is a city / area. Filters profiles within the specified radius of the location. (integer)
+        current_work_location:
+          type: array
+          items: {}
+          description: Accepts an array of location strings (cities or countries). Filters profiles who currently work in any of the specified locations. (array, max:50)
+        past_work_location:
+          type: array
+          items: {}
+          description: Accepts an array of location strings (cities or countries). Filters profiles who previously worked in any of the specified locations. (array, max:50)
+        company:
+          type: array
+          items: {}
+          description: Accepts an array of company names (array, max:50)
+        past_company:
+          type: array
+          items: {}
+          description: Returns profiles that worked at these companies in past (non-current) roles. Cannot be combined with company_filter set to past, past_only, or both. Cannot be combined with match_experience when both job_title and company are set. (array, max:50)
+        company_filter:
+          type: string
+          default: current
+          description: 'current – Returns profiles matching the current company name    past – Returns profiles matching any past company name  past_only – Returns profiles where the company appears in past experience and is not their current employer.  both – Returns profiles matching either current or past experience (string, default: current)'
+        current_company_only:
+          type: boolean
+          default: 'true'
+          description: 'Returns profiles matching the current company name (boolean, default: true)'
+        domain:
+          type: array
+          items: {}
+          description: Accepts an array of domains (array, max:50)
+        industry:
+          type: array
+          items: {}
+          description: Accepts an array of industries. Prefix an industry with NOT to exclude it (e.g. "NOT Computer Software"). Accepted values list (array, max:50)
+        keyword:
+          type: string
+          description: Returns profiles that contain the mentioned keyword anywhere in their profile (text)
+        company_size:
+          type: array
+          items: {}
+          description: Accepts an array of company size ranges. Accepted values list (array)
+        years_of_experience:
+          type: array
+          items: {}
+          description: Accepts an array of ranges in the format X_Y where X and Y are integers representing the minimum and maximum years of experience. e.g. ["2_5", "6_10"] means 2-5 years OR 6-10 years. (array)
+        years_in_current_role:
+          type: array
+          items: {}
+          description: Accepts an array of ranges in the format X_Y where X and Y are integers representing the minimum and maximum years in current role. e.g. ["1_3", "4_6"] means 1-3 years OR 4-6 years in current role. Cannot be used with recently_changed_jobs. (array)
+        recently_changed_jobs:
+          type: boolean
+          default: 'false'
+          description: 'If set to true, returns profiles whose current job started within the last 3 calendar months. Cannot be used with years_in_current_role. (boolean, default: false)'
+        is_currently_working:
+          type: boolean
+          description: If true, returns only profiles with an active current role. If false, returns only profiles with no active current role. Omit to return both. (boolean)
+        page:
+          type: integer
+          description: Provides results for the given page (integer)
+        page_size:
+          type: integer
+          default: '25'
+          description: 'Maximum number of profiles to return per page. Valid range is 1-25. When not provided, 25 profiles are returned. Search credits are charged only for the number of profiles returned. (integer, default: 25)'
+        data_types:
+          type: array
+          items: {}
+          description: Returns profiles containing atleast one of the specified data types. It accepts an array of one more values from this list [personal_email, work_email, phone] (array)
+        reveal_info:
+          type: boolean
+          default: 'false'
+          description: 'If set to true, contact_info will contain the emails and phone numbers of the profile and credits will be charged (boolean, default: false)'
+        detailed_experience:
+          type: boolean
+          default: 'false'
+          description: 'If set to true, the experience field returns detailed data like title, company_name, summary, start_date_year, start_date_month, end_date_year, end_date_month, is_current, linkedin_url, logo_url. If false, returns simple text strings. (boolean, default: false)'
+        detailed_education:
+          type: boolean
+          default: 'false'
+          description: 'If set to true, the education field returns detailed data like school_name, degree, field_of_study, description, start_date_year, end_date_year, url. If false, returns simple text strings. (boolean, default: false)'
+        exclude_job_titles:
+          type: array
+          items: {}
+          description: Accepts an array of job titles to exclude from results. (array)
+        exclude_companies:
+          type: array
+          items: {}
+          description: Accepts an array of company names to exclude from results. (array)
+        exclude_companies_filter:
+          type: string
+          default: both
+          description: 'Applies when exclude_companies is non-empty. current – Exclude if the company appears as the profile''s current employer only.past – Exclude if it appears in past roles only.both – Exclude if it appears in either current or past experience. (string, default: both)'
+      required:
+      - education
+      - job_title
+      - keyword
+      - past_job_title
+      - skills
+    PeopleSearchResponse:
+      type: object
+      properties:
+        status_code:
+          type: integer
+        metadata:
+          type: object
+          properties:
+            page:
+              type: integer
+            page_size:
+              type: integer
+            total_results:
+              type: integer
+        profiles:
+          type: object
+          properties:
+            https://linkedin.com/in/at-JqjtXv:
+              type: object
+              properties:
+                li_vanity:
+                  type: string
+                title:
+                  type: string
+                contact_availability:
+                  type: object
+                  properties:
+                    personal_email:
+                      type: boolean
+                    work_email:
+                      type: boolean
+                    phone:
+                      type: boolean
+                contact_info:
+                  type: object
+                  properties:
+                    emails:
+                      type: array
+                      items: {}
+                    personal_emails:
+                      type: array
+                      items: {}
+                    work_emails:
+                      type: array
+                      items: {}
+                    work_email_status:
+                      type: array
+                      items: {}
+                    phones:
+                      type: array
+                      items: {}
+        contact_info:
+          type: array
+          items: {}
+          description: Returns an array containing contact information including email and phone numbers (array)
+        contact_availability:
+          type: array
+          items: {}
+          description: Returns an array determining whether the profile contains the contact information (array)
+    PeopleCountResponse:
+      type: object
+      properties:
+        status_code:
+          type: integer
+          description: HTTP status code of the response (integer)
+        total_results:
+          type: integer
+          description: Total number of profiles matching the search criteria (integer)
+        estimated_personal_emails:
+          type: integer
+          description: Estimated number of profiles with a personal email (integer)
+        estimated_work_emails:
+          type: integer
+          description: Estimated number of profiles with a work email (integer)
+        estimated_phones:
+          type: integer
+          description: Estimated number of profiles with a phone number (integer)
+    DecisionMakersResponse:
+      type: object
+      properties:
+        contact_info:
+          type: array
+          items: {}
+          description: Returns an array containing contact information including email and phone numbers (array)
+        contact_availability:
+          type: array
+          items: {}
+          description: Returns an array determining whether the profile contains the contact information (array)
+    CompanySearchRequest:
+      type: object
+      properties:
+        linkedin_url:
+          type: array
+          items: {}
+          description: 'Accepts an array of company URLs. Acceptable inputs: www.linkedin.com/company/contactout, contactout, https://www.linkedin.com/company/27927, 27927. Cannot be used with other search filters. (array, max:25)'
+        name:
+          type: array
+          items: {}
+          description: Accepts an array of company names (array, max:50)
+        domain:
+          type: array
+          items: {}
+          description: Accepts an array of company domains (array, max:50)
+        size:
+          type: array
+          items: {}
+          description: Company size by number of employees. Accepted values list (array)
+        hq_only:
+          type: boolean
+          description: Filter search locations by headquarters only (boolean)
+        location:
+          type: array
+          items: {}
+          description: Accepts an array of locations (array, max:50)
+        industries:
+          type: array
+          items: {}
+          description: Accepts an array of industries. Accepted values list (array, max:50)
+        technologies:
+          type: array
+          items: {}
+          description: Accepts an array of technology names (array, max:50)
+        min_revenue:
+          type: integer
+          description: Minimum revenue of the company Accepted values list (integer)
+        max_revenue:
+          type: integer
+          description: Maximum revenue of the company Accepted values list (integer)
+        year_founded_from:
+          type: integer
+          description: Minimum year founded of the company (integer, min:1985)
+        year_founded_to:
+          type: integer
+          description: 'Maximum year founded of the company. Requires year_founded_from. (integer, max: current year)'
+      required:
+      - technologies
+    CompanySearchResponse:
+      type: object
+      properties:
+        status_code:
+          type: integer
+          description: The HTTP status code of the response. Indicates the success or failure of the API request. (integer)
+        companies:
+          type: array
+          items: {}
+          description: Contains company profile details that matched the search.name - Name of the company.url - The LinkedIn URL of the company.domain - Domain name of the company.email_domain - Email domain of the company.overview - Brief description of the company.type - Type of the company (e.g., Privately Held, Public).size - Size of the company (e.g., number of employees).country - Country where the company is located.revenue - Revenue of the companyfounded_at - Year the company was founded.industry - Industry in which the company operates.headquarter - Headquarters location of the company.website - URL of the company's website.location - The location of the company.logo_url - The URL of the company logo.specialties - Specialties or areas of expertise of the company.technologies - Array of technologies used by the company.locations - Array containing locations where the company operates.employees - Number of employees on LinkedIn.followers - Number of LinkedIn followers.funding - Funding
+            summary object. Contains total_funding_usd, rounds, funding_status, latest_date, number_of_funding_rounds. (array)
+    EmailToLinkedinResponse:
+      type: object
+      properties:
+        status_code:
+          type: integer
+          description: HTTP status code indicating the success or failure of the request. (integer)
+        profile:
+          type: object
+          description: An object containing basic information about the user's profile.  email (string) - Email address associated with the user's profile.linkedin (string) - LinkedIn profile URL of the user. (object)
+    ContactCheckerPersonalEmailCheckerResponse:
+      type: object
+      properties:
+        status_code:
+          type: integer
+          description: The HTTP status code of the response. Indicates the success or failure of the API request. (integer)
+        profile:
+          type: object
+          description: Contains personal email availability status for a single LinkedIn profile. email - returns true if personal email is present (object)
+    ContactCheckerWorkEmailCheckerResponse:
+      type: object
+      properties:
+        status_code:
+          type: integer
+          description: The HTTP status code of the response. Indicates the success or failure of the API request. (integer)
+        profile:
+          type: object
+          description: Contains work email availability status for a single LinkedIn profile. email - returns true if work email is presentemail_status - returns whether the email is verified or unverified. (object)
+    ContactCheckerPhoneNumberCheckerResponse:
+      type: object
+      properties:
+        status_code:
+          type: integer
+          description: The HTTP status code of the response. Indicates the success or failure of the API request. (integer)
+        profile:
+          type: object
+          description: Contains phone number availability status for a single LinkedIn profile. phone - returns true if phone number is present (object)
+    HashedEmailRequest:
+      type: object
+      properties:
+        profiles:
+          type: array
+          items: {}
+          description: An array of LinkedIn profile URLs. URL must begin with http and must contain linkedin.com/in/ or linkedin.com/pub/. At least 5 unique profiles are required. (Array, required, min:5 max:100)
+      required:
+      - profiles
+    HashedEmailResponse:
+      type: object
+      properties:
+        status_code:
+          type: integer
+          description: HTTP status code indicating the success or failure of the request. (integer)
+        matches:
+          type: object
+          description: Hashed identifier results from matched profiles. (object)
+        matches.emails:
+          type: array
+          items: {}
+          description: Personal emails from all matched profiles, returned in no particular order. Each email is normalized by trimming whitespace and hashed with SHA-256. A profile with multiple personal emails may return several hashes. Work emails are not included. (array)
+        matches_found:
+          type: integer
+          description: Number of profiles that returned at least one hashed personal email. This is not the number of hashes returned. (integer)
+        unmatched:
+          type: array
+          items: {}
+          description: LinkedIn profile URLs from the request that did not return a hashed personal email. (array)
+        unmatched_count:
+          type: integer
+          description: Number of profiles listed in unmatched. (integer)
+    EmailVerifierBulkRequest:
+      type: object
+      properties:
+        callback_url:
+          type: string
+          description: A URL where the results will be posted once the bulk email verification operation is completed. (String, optional)
+        emails:
+          type: array
+          items: {}
+          description: An array of email addresses (Array, required, Max:100)
+      required:
+      - emails
+    EmailVerifierBulkResponse:
+      type: object
+      properties:
+        uuid:
+          type: string
+          description: The unique identifier associated with the email verification request. (string)
+        status:
+          type: string
+          description: 'The status of the email verification process. "DONE": Indicates that the email verification process has been completed. (string)'
+        result:
+          type: object
+          description: An object containing the results of the email verification process, indexed by email addresses.Below are the possible values for verification statusvalid - the email address is valid.invalid - the email address is not valid. accept_all - the email address is valid but any email address is accepted by the server.disposable - the email address comes from a disposable email service provider.unknown we failed to verify the email address. (object)
+    CampaignsListCampaignsResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items: {}
+          description: An array of campaign objects. See Campaign object. (array)
+        metadata:
+          type: object
+          description: Pagination details for the request. (object)
+        page:
+          type: integer
+          description: The current page number. (integer)
+        page_size:
+          type: integer
+          description: The number of campaigns returned per page. (integer)
+        total_results:
+          type: integer
+          description: The total number of campaigns available. (integer)
+        has_more:
+          type: boolean
+          description: Whether there are more pages of results. (boolean)
+    CampaignsAddRecipientsRequest:
+      type: object
+      properties:
+        recipients:
+          type: array
+          items: {}
+          description: 'An array of recipient objects to add. Each object can contain: email (string, max:255), phone (string, max:255, must be a valid phone number), first_name (string, max:100), last_name (string, max:100), and company (string, max:100). Each recipient must include at least one contact identifier — email or phone — otherwise that recipient is returned as failed. The remaining fields are optional. (array, required, min:1, max:100)'
+      required:
+      - recipients
+    CampaignsAddRecipientsResponse:
+      type: object
+      properties:
+        success_count:
+          type: integer
+          description: The number of recipients that were added successfully. (integer)
+        failure_count:
+          type: integer
+          description: The number of recipients that could not be added. (integer)
+        results:
+          type: array
+          items: {}
+          description: Per-recipient results. See below. (array)
+        email:
+          type: string
+          description: The recipient's email address. (string)
+        status:
+          type: string
+          description: The result for this recipient. One of success, warning, or failed. (string)
+        message:
+          type: string
+          description: A human-readable reason. Present for warning and failed results (e.g. Invalid email format, Recipient already enrolled). (string)
+    CampaignsRemoveRecipientsRequest:
+      type: object
+      properties:
+        recipients:
+          type: array
+          items: {}
+          description: An array of recipient objects to remove. Each object must contain an email (string, required, max:255) identifying the recipient to remove. (array, required, min:1, max:100)
+      required:
+      - recipients
+    CampaignsStartCampaignResponse:
+      type: object
+      properties:
+        status_code:
+          type: integer
+        message:
+          type: string
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+            status:
+              type: string
+        data.id:
+          type: string
+          description: The campaign_id of the campaign. (string)
+        data.status:
+          type: string
+          description: The campaign status after the transition. (string)
+  securitySchemes:
+    apiToken:
+      type: apiKey
+      in: header
+      name: token
+      description: 'ContactOut uses API keys to allow access to the API. You can request an API key by booking a meeting. ContactOut expects the API key to be included in all API requests to the server in a header that looks like the following: token : <YOUR_API_TOKEN>'
+  responses:
+    BadCredentials:
+      description: Bad credentials or invalid headers
+    BadRequest:
+      description: Bad request or invalid input
+    Forbidden:
+      description: 'You''re out of credits, please email your sales manager or book a meeting; or: No access to endpoint'
+    RateLimited:
+      description: 'Rate limit reached. Check header retry-after: <time_in_seconds> for when rate limit will reset'
+      headers:
+        retry-after:
+          schema:
+            type: integer
+          description: Seconds until the rate limit resets
+x-rate-limits:
+- 'People Search API: 60 requests per minute'
+- 'Contact Checker APIs: 150 requests per minute'
+- 'Other APIs: 1000 requests per minute'

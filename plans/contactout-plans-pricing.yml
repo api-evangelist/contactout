@@ -1,0 +1,91 @@
+name: ContactOut plans and pricing
+generated: '2026-10-07'
+method: searched
+source: https://contactout.com/pricing
+audience: business-product
+pricing_basis: tiered-subscription
+published: true
+currency: USD
+billing_period: month
+plan_count: 4
+delivery:
+  delivery: managed
+note: 'The pricing page is JavaScript-rendered: the plain HTML carries empty "$ /month" slots plus an embedded plan JSON (priceDollars / originalPrice), and the price_text values were copied character-for-character from the rendered page (fetch-url.py --render, 2026-10-07). check-economics.py cannot see the rendered DOM, so its verbatim check reports the three price_text values as not on the plain page; the embedded JSON confirms the numbers (Email priceDollars 49 / originalPrice 99; Email + phone priceDollars 99). API access is sold only on the Team / API tier, and API keys are issued by booking a meeting (https://api.contactout.com#authentication).'
+plans:
+- name: Free
+  price_text: $0/month
+  price: 0
+  currency: USD
+  period: month
+  description: Browser Extension, Search Portal, Trial of premium features, 1 user per company limit, Limited time only
+  features:
+  - Browser Extension
+  - Search Portal
+  - Trial of premium features
+  - 1 user per company limit
+  - Limited time only
+  limits:
+  - name: emails
+    limit_text: 5 emails / day
+    limit: 5
+    window: day
+  - name: phones
+    limit_text: 5 phones / day
+    limit: 5
+    window: day
+  - name: exports
+    limit_text: 5 exports / day
+    limit: 5
+    window: day
+- name: Email
+  price_text: $99 $49/month
+  currency: USD
+  period: month
+  description: Unlimited emails, 300 exports / month, Email campaigns, List builder, 1 user per company limit, Plus everything in free plan
+  features:
+  - Unlimited emails
+  - Email campaigns
+  - List builder
+  - 1 user per company limit
+  - Plus everything in free plan
+  limits:
+  - name: exports
+    limit_text: 300 exports / month
+    limit: 300
+    window: month
+  price: 49
+  price_evidence: 'page HTML embeds plan JSON: "type":"Email","priceDollars":49,"priceDollarsMonthly":49,"originalPrice":99'
+- name: Email + Phone
+  price_text: $199 $99/month
+  currency: USD
+  period: month
+  description: Unlimited emails, Unlimited phones, 600 exports / month, Data enrichment, AI Email Writer, 1 user per company limit, Plus everything in email plan
+  features:
+  - Unlimited emails
+  - Unlimited phones
+  - Data enrichment
+  - AI Email Writer
+  - 1 user per company limit
+  - Plus everything in email plan
+  limits:
+  - name: exports
+    limit_text: 600 exports / month
+    limit: 600
+    window: month
+  price: 99
+  price_evidence: 'page HTML embeds plan JSON: "type":"Email + phone","priceDollars":99,"priceDollarsMonthly":99'
+- name: Team / API
+  price_text: Contact Us
+  price: Contact Us
+  description: Team Plan, API Access, 20% more data coverage, Bulk license 700million+ profiles, Works with recruiter Pro, Salesforce + ATS integrations, Team Management & reports, Dedicated Account Manager
+  features:
+  - Team Plan
+  - API Access
+  - 20% more data coverage
+  - Bulk license 700million+ profiles
+  - Works with recruiter Pro
+  - Salesforce + ATS integrations
+  - Team Management & reports
+  - Dedicated Account Manager
+  limits: []
+  api_access: true

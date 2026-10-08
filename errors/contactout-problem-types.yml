@@ -1,0 +1,26 @@
+generated: '2026-10-07'
+method: searched
+source: https://api.contactout.com#errors
+format: json
+envelope: 'JSON body carrying a status_code field (every documented success example begins {"status_code": 200, ...}); the reference documents error codes and messages in a table but shows no error-body example, so the error field names beyond the HTTP status are not published. RFC 9457 problem+json is not used.'
+problems:
+- status: 400
+  title: Bad credentials or invalid headers
+  description: 'Error table row, verbatim: 400 - Bad credentials or invalid headers.'
+  remediation: 'Send the API key in the token header exactly as documented (token: <YOUR_API_TOKEN>) with Content-Type and Accept set to application/json.'
+- status: 401
+  title: Bad request or invalid input
+  description: 'Error table row, verbatim: 401 - Bad request or invalid input. (The 400 and 401 wording on the page reads as transposed; it is recorded as published.)'
+  remediation: Check the request parameters against the endpoint's parameter table.
+- status: 403
+  title: Out of credits
+  description: 'Error table row, verbatim: 403 - You''re out of credits, please email your sales manager or book a meeting: https://contactout.com/meeting?utm_source=api-out-of-credits'
+  remediation: Check remaining credits with GET /v1/stats and top up through your sales manager; credits are consumed per result as documented under each endpoint's Cost.
+- status: 403
+  title: No access to endpoint
+  description: 'Error table row, verbatim: 403 - No access to endpoint. Several endpoints carry an "Access" section stating they require specific plan access.'
+  remediation: Ask ContactOut to enable the endpoint on the API plan.
+- status: 429
+  title: Rate limit reached
+  description: 'Error table row, verbatim: 429 - Rate limit reached. Check header retry-after: <time_in_seconds> for when rate limit will reset'
+  remediation: Wait the number of seconds in the retry-after response header before retrying; stay under 60/min (People Search), 150/min (Contact Checker) or 1000/min (others).

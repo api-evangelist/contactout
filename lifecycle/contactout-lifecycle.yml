@@ -1,0 +1,17 @@
+generated: '2026-10-07'
+method: searched
+source:
+- https://api.contactout.com
+- https://status.contactout.com/
+versioning:
+  scheme: URL path version segment
+  current: v1 (all endpoints) with a v2 beside v1 for Bulk ContactInfo (POST /v2/people/linkedin/batch and GET /v2/people/linkedin/batch/{job_id} alongside POST /v1/people/linkedin/batch)
+  policy: null
+  note: The reference documents V1 and V2 Bulk ContactInfo side by side; no versioning policy, support window or sunset schedule is published.
+deprecation:
+  policy: null
+  headers: null
+  note: No deprecation policy, Deprecation/Sunset headers or deprecated endpoints are documented; V1 Bulk ContactInfo remains documented beside V2 without a deprecation notice.
+sla: null
+status_page: https://status.contactout.com/
+deprecated_operations: []

@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/contactout/main/json-schema/contactout-company-search-request-schema.json",
+  "title": "CompanySearchRequest",
+  "x-generated": "2026-10-07",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/_ae-authored/contactout-openapi-generated.yml#/components/schemas/CompanySearchRequest",
+  "type": "object",
+  "properties": {
+    "linkedin_url": {
+      "type": "array",
+      "items": {},
+      "description": "Accepts an array of company URLs. Acceptable inputs: www.linkedin.com/company/contactout, contactout, https://www.linkedin.com/company/27927, 27927. Cannot be used with other search filters. (array, max:25)"
+    },
+    "name": {
+      "type": "array",
+      "items": {},
+      "description": "Accepts an array of company names (array, max:50)"
+    },
+    "domain": {
+      "type": "array",
+      "items": {},
+      "description": "Accepts an array of company domains (array, max:50)"
+    },
+    "size": {
+      "type": "array",
+      "items": {},
+      "description": "Company size by number of employees. Accepted values list (array)"
+    },
+    "hq_only": {
+      "type": "boolean",
+      "description": "Filter search locations by headquarters only (boolean)"
+    },
+    "location": {
+      "type": "array",
+      "items": {},
+      "description": "Accepts an array of locations (array, max:50)"
+    },
+    "industries": {
+      "type": "array",
+      "items": {},
+      "description": "Accepts an array of industries. Accepted values list (array, max:50)"
+    },
+    "technologies": {
+      "type": "array",
+      "items": {},
+      "description": "Accepts an array of technology names (array, max:50)"
+    },
+    "min_revenue": {
+      "type": "integer",
+      "description": "Minimum revenue of the company Accepted values list (integer)"
+    },
+    "max_revenue": {
+      "type": "integer",
+      "description": "Maximum revenue of the company Accepted values list (integer)"
+    },
+    "year_founded_from": {
+      "type": "integer",
+      "description": "Minimum year founded of the company (integer, min:1985)"
+    },
+    "year_founded_to": {
+      "type": "integer",
+      "description": "Maximum year founded of the company. Requires year_founded_from. (integer, max: current year)"
+    }
+  },
+  "required": [
+    "technologies"
+  ]
+}

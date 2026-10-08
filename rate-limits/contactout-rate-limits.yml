@@ -1,0 +1,44 @@
+name: ContactOut API rate limits
+generated: '2026-10-07'
+method: searched
+source: https://api.contactout.com#rate-limits
+docs: https://api.contactout.com#rate-limits
+limit_count: 3
+limits:
+- name: People Search API
+  limit_text: 'People Search API: 60 requests per minute'
+  limit: 60
+  max: 60
+  window: 1 minute
+  unit: minute
+  scope: per API token (the docs state the rate but not the scope)
+  endpoint: POST /v1/people/search
+  operation: peopleSearch
+- name: Contact Checker APIs
+  limit_text: 'Contact Checker APIs: 150 requests per minute'
+  limit: 150
+  max: 150
+  window: 1 minute
+  unit: minute
+  scope: per API token (the docs state the rate but not the scope)
+  endpoint: GET /v1/people/linkedin/personal_email_status, GET /v1/people/linkedin/work_email_status, GET /v1/people/linkedin/phone_status
+  operation: contactCheckerPersonalEmailChecker, contactCheckerWorkEmailChecker, contactCheckerPhoneNumberChecker
+- name: Other APIs
+  limit_text: 'Other APIs: 1000 requests per minute'
+  limit: 1000
+  max: 1000
+  window: 1 minute
+  unit: minute
+  scope: per API token, every other endpoint
+headers:
+  on_exhaustion:
+    status: 429
+    message_text: 'Rate limit reached. Check header retry-after: <time_in_seconds> for when rate limit will reset'
+    retry_after: 'retry-after: <time_in_seconds>'
+  rate_limit_headers_documented: false
+  note: Only retry-after is documented (in the 429 error table). No X-RateLimit-* or RateLimit-* headers are documented.
+credits:
+  note: Beyond the request rate, every endpoint is metered in credits (email, phone, search, verifier) documented per endpoint under "Cost" on the API reference; GET /v1/stats returns remaining credits. Monthly credit limits apply per plan.
+  source: https://api.contactout.com#cost
+notes:
+- 'The ai-info page states separately: "Rate Limits Vary by subscription tier. Typical usage ranges between 30-600 requests/min. Monthly credit limits apply" (https://contactout.com/ai-info); the API reference numbers above are the authoritative per-API figures.'

@@ -1,0 +1,89 @@
+generated: '2026-10-07'
+method: searched
+source:
+- https://api.contactout.com#authentication
+- https://api.contactout.com#rate-limits
+- https://api.contactout.com#errors
+- https://api.contactout.com#campaigns-api
+authentication:
+  style: API key in a custom request header
+  header: 'token: <YOUR_API_TOKEN>'
+  also_sent: 'authorization: basic (shown in the reference curl example)'
+  mcp: OAuth 2.0 authorization code + PKCE for the hosted MCP server at https://contactout.com/mcp (scope mcp:use)
+  docs: https://api.contactout.com#authentication
+  artifact: authentication/contactout-authentication.yml
+idempotency:
+  coverage: none
+  mechanism: null
+  header: null
+  retention: null
+  scope: []
+  docs: https://api.contactout.com
+  note: No idempotency key or replay-protection mechanism is documented on any of the 13 mutating operations (search/count/enrich POSTs, bulk jobs, campaign start/stop and recipient add/remove). Credit-consuming calls repeated by a client are charged again as documented under each endpoints Cost.
+reversibility:
+  status: documented
+  surfaces:
+  - write: campaignsStartCampaign
+    reversal: campaignsStopCampaign
+    window: null
+    docs: https://api.contactout.com#campaigns-api
+    note: POST /v1/campaigns/{campaign_id}/stop stops a started campaign; no window is stated.
+  - write: campaignsAddRecipients
+    reversal: campaignsRemoveRecipients
+    window: null
+    docs: https://api.contactout.com#campaigns-api
+    note: DELETE /v1/campaigns/{campaign_id}/recipients removes recipients added with POST; no window is stated.
+  - write: peopleEnrich / contactInfoSingleFromLinkedinProfile / peopleSearch and every other credit-consuming call
+    reversal: null
+    window: null
+    note: Credits consumed when a result is found are not documented as refundable; GET /v1/stats reports remaining credits.
+  note: Two campaign actions have documented reversal operations without a stated window (documented, not verified). The data-retrieval surface spends credits that no documented operation returns.
+pagination:
+  style: page number
+  params:
+    page: page number (1-based)
+    page_size: page size
+  operations:
+  - peopleSearch
+  - decisionMakers
+  - campaignsListCampaigns
+  response_fields: not documented beyond the examples
+  docs: https://api.contactout.com#people-search-api
+field_expansion:
+  style: boolean flags on enrichment calls
+  params:
+  - include_phone (contact info endpoints)
+  - profile_only (LinkedIn Profile API)
+  - reveal_info (Decision Makers API)
+  note: Flags switch whether email/phone are revealed (and charged) rather than sparse-fieldsets.
+metadata: null
+request_tracing:
+  header: null
+  note: No request-id header is documented; bulk jobs return a job_id / uuid to correlate results and webhook deliveries.
+versioning:
+  style: URL path segment
+  current: v1, with v2 for Bulk ContactInfo
+  policy: null
+  artifact: lifecycle/contactout-lifecycle.yml
+error_envelope:
+  format: json
+  shape: status_code field in the JSON body; the error reference is a code/message table (400, 401, 403 x2, 429)
+  artifact: errors/contactout-problem-types.yml
+  docs: https://api.contactout.com#errors
+rate_limit_signaling:
+  status: 429
+  headers:
+  - 'retry-after: <time_in_seconds>'
+  limits:
+  - 'People Search API: 60 requests per minute'
+  - 'Contact Checker APIs: 150 requests per minute'
+  - 'Other APIs: 1000 requests per minute'
+  artifact: rate-limits/contactout-rate-limits.yml
+dry_run_mode:
+  available: partial
+  note: The Contact Checker endpoints (personal_email_status, work_email_status, phone_status) report whether an email/phone exists for a profile without revealing it; POST /v1/people/count returns a match count before a paid search. These are documented "check before you spend" calls, not a general dry-run flag.
+webhooks:
+  mechanism: callback_url in the request body of POST /v2/people/linkedin/batch; results are POSTed as JSON to that URL when the job finishes
+  signature: null
+  retries: null
+  docs: https://api.contactout.com#v2-bulk-contactinfo-webhook-payload-parameters

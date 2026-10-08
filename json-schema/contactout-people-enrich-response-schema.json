@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/contactout/main/json-schema/contactout-people-enrich-response-schema.json",
+  "title": "PeopleEnrichResponse",
+  "x-generated": "2026-10-07",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/_ae-authored/contactout-openapi-generated.yml#/components/schemas/PeopleEnrichResponse",
+  "type": "object",
+  "properties": {
+    "status_code": {
+      "type": "integer",
+      "description": "The HTTP status code of the response. Indicates the success or failure of the API request. (integer)"
+    },
+    "profile": {
+      "type": "object",
+      "description": "Object containing all profile details associated with the provided parameters.email - The user's personal email address.workEmail - The user's work email address (if include=work_email in request).workEmailStatus - The status of the work email address, whether it's verified or unverified.fullName - The full name of the user.headline - The job title or professional headline of the user.industry - The industry in which the user works.linkedinUrl - The LinkedIn profile URL of the user.profilePictureUrl - The profile picture URL of the user.confidenceLevel - Confidence level in the accuracy of the profile information.altMatches - Alternative matches or suggestions related to the user's profile.phone - The user's phone number.twitter - The user's Twitter handle.github - The user's GitHub username.company - An object containing information about the user's current company including name, URL, website, headquarters, locations, and other company details.location - The current location of the user.summary - A brief summary of the user's professional experience and skills.experience - An array containing details of the user's work experience.education - An array containing details of the user's educational background.skills - An array containing the user's skills and expertise.certifications - An array of objects containing the certifications of the profile.publications - An array of objects containing the publications of the profile.projects - An array of objects containing the project details of the profile.volunteering_experiences - An array of objects containing the volunteering experience details of the profile.followers - The number of LinkedIn followers the profile has.jobFunction - The functional area of the user's current role (e.g., Engineering, Marketing, Sales).seniority - The seniority level of the user's current role (e.g., Entry Level, Manager, Vice President).workStatus - The current employment status of the user (\"open_to_work\" or null).updatedAt - The date and time when the profile was last updated. (object)"
+    }
+  }
+}

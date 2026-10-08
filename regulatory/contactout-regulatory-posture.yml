@@ -1,0 +1,44 @@
+generated: '2026-10-07'
+method: searched
+source:
+- https://contactout.com/optout
+- https://contactout.com/ai-info
+- https://contactout.com/llms.txt
+signals:
+  data_subject_request:
+    url: https://contactout.com/optout
+    section: Opt-out / data removal
+    note: Opt-out / suppression request page for individuals, linked from the providers own llms.txt and ai-info page; GDPR and CCPA are the regimes the provider itself names.
+    evidence:
+    - source: https://contactout.com/llms.txt
+      http_status: 200
+      fetched: '2026-10-07'
+      quote: '[Opt-out / data removal](https://contactout.com/optout): Request suppression or removal of personal data.'
+    - source: https://contactout.com/ai-info
+      http_status: 200
+      fetched: '2026-10-07'
+      quote: Compliance GDPR CCPA Data suppression and opt-out supported Opt-Out Individuals can request opt-out or removal at https://contactout.com/optout
+probed_absent:
+- url: https://contactout.com/accessibility
+  status: 404
+- url: https://contactout.com/legal/subprocessors
+  status: 404
+- url: https://contactout.com/subprocessors
+  status: 404
+- url: https://contactout.com/legal/dpa
+  status: 404
+- url: https://contactout.com/dpa
+  status: 404
+- url: https://contactout.com/privacy/requests
+  status: 404
+- url: https://contactout.com/transparency
+  status: 404
+- url: https://contactout.com/security/sbom
+  status: 404
+- url: https://contactout.com/trust
+  status: 404
+- url: https://contactout.com/security
+  status: 404
+- url: https://contactout.com/.well-known/security.txt
+  status: 403
+note: Only an opt-out / data-removal request page was found. No subprocessor list, DPA, accessibility conformance report, SBOM, transparency report, data-residency statement or Global Privacy Control statement is published on the hosts probed (contactout.com, api.contactout.com). The site footer links "Do Not Sell My Info" but the privacy page body is JavaScript-rendered and its HTML carries no GPC statement.

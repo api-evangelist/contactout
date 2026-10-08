@@ -1,0 +1,390 @@
+{
+  "@context": {
+    "@vocab": "https://contactout.com/schema#",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "contactout": "https://contactout.com/schema#",
+    "LinkedinProfileFromLinkedinUrlResponse": "contactout:LinkedinProfileFromLinkedinUrlResponse",
+    "status_code": {
+      "@id": "contactout:status_code",
+      "@type": "xsd:integer"
+    },
+    "profile": {
+      "@id": "contactout:profile"
+    },
+    "LinkedinProfileFromEmailAddressResponse": "contactout:LinkedinProfileFromEmailAddressResponse",
+    "PeopleEnrichRequest": "contactout:PeopleEnrichRequest",
+    "linkedin_url": {
+      "@id": "contactout:linkedin_url",
+      "@type": "xsd:string"
+    },
+    "email": {
+      "@id": "contactout:email",
+      "@type": "xsd:string"
+    },
+    "phone": {
+      "@id": "contactout:phone",
+      "@type": "xsd:string"
+    },
+    "full_name": {
+      "@id": "contactout:full_name",
+      "@type": "xsd:string"
+    },
+    "first_name": {
+      "@id": "contactout:first_name",
+      "@type": "xsd:string"
+    },
+    "last_name": {
+      "@id": "contactout:last_name",
+      "@type": "xsd:string"
+    },
+    "company": {
+      "@id": "contactout:company",
+      "@container": "@list"
+    },
+    "company_domain": {
+      "@id": "contactout:company_domain",
+      "@container": "@list"
+    },
+    "education": {
+      "@id": "contactout:education",
+      "@container": "@list"
+    },
+    "location": {
+      "@id": "contactout:location",
+      "@type": "xsd:string"
+    },
+    "job_title": {
+      "@id": "contactout:job_title",
+      "@type": "xsd:string"
+    },
+    "include": {
+      "@id": "contactout:include",
+      "@container": "@list"
+    },
+    "PeopleEnrichResponse": "contactout:PeopleEnrichResponse",
+    "ContactInfoSingleFromLinkedinProfileResponse": "contactout:ContactInfoSingleFromLinkedinProfileResponse",
+    "ContactInfoBulkV1BulkContactinfoRequest": "contactout:ContactInfoBulkV1BulkContactinfoRequest",
+    "profiles": {
+      "@id": "contactout:profiles",
+      "@container": "@list"
+    },
+    "include_phone": {
+      "@id": "contactout:include_phone",
+      "@type": "xsd:boolean"
+    },
+    "email_type": {
+      "@id": "contactout:email_type",
+      "@type": "xsd:string"
+    },
+    "ContactInfoBulkV1BulkContactinfoResponse": "contactout:ContactInfoBulkV1BulkContactinfoResponse",
+    "ContactInfoBulkV2BulkContactinfoRequest": "contactout:ContactInfoBulkV2BulkContactinfoRequest",
+    "callback_url": {
+      "@id": "contactout:callback_url",
+      "@type": "xsd:string"
+    },
+    "ContactInfoBulkV2BulkContactinfoResponse": "contactout:ContactInfoBulkV2BulkContactinfoResponse",
+    "status": {
+      "@id": "contactout:status",
+      "@type": "xsd:string"
+    },
+    "job_id": {
+      "@id": "contactout:job_id",
+      "@type": "xsd:string"
+    },
+    "ContactInfoBulkV2BulkContactinfoGetResponse": "contactout:ContactInfoBulkV2BulkContactinfoGetResponse",
+    "uuid": {
+      "@id": "contactout:uuid",
+      "@type": "xsd:string"
+    },
+    "result": {
+      "@id": "contactout:result"
+    },
+    "CompanyInformationFromDomainsRequest": "contactout:CompanyInformationFromDomainsRequest",
+    "domains": {
+      "@id": "contactout:domains",
+      "@container": "@list"
+    },
+    "CompanyInformationFromDomainsResponse": "contactout:CompanyInformationFromDomainsResponse",
+    "companies": {
+      "@id": "contactout:companies"
+    },
+    "PeopleSearchRequest": "contactout:PeopleSearchRequest",
+    "name": {
+      "@id": "contactout:name",
+      "@type": "xsd:string"
+    },
+    "past_job_title": {
+      "@id": "contactout:past_job_title",
+      "@container": "@list"
+    },
+    "job_function": {
+      "@id": "contactout:job_function",
+      "@container": "@list"
+    },
+    "seniority": {
+      "@id": "contactout:seniority",
+      "@container": "@list"
+    },
+    "current_titles_only": {
+      "@id": "contactout:current_titles_only",
+      "@type": "xsd:boolean"
+    },
+    "include_related_job_titles": {
+      "@id": "contactout:include_related_job_titles",
+      "@type": "xsd:boolean"
+    },
+    "match_experience": {
+      "@id": "contactout:match_experience",
+      "@type": "xsd:string"
+    },
+    "skills": {
+      "@id": "contactout:skills",
+      "@container": "@list"
+    },
+    "languages": {
+      "@id": "contactout:languages",
+      "@container": "@list"
+    },
+    "educations": {
+      "@id": "contactout:educations",
+      "@container": "@list"
+    },
+    "location_radius": {
+      "@id": "contactout:location_radius",
+      "@type": "xsd:integer"
+    },
+    "current_work_location": {
+      "@id": "contactout:current_work_location",
+      "@container": "@list"
+    },
+    "past_work_location": {
+      "@id": "contactout:past_work_location",
+      "@container": "@list"
+    },
+    "past_company": {
+      "@id": "contactout:past_company",
+      "@container": "@list"
+    },
+    "company_filter": {
+      "@id": "contactout:company_filter",
+      "@type": "xsd:string"
+    },
+    "current_company_only": {
+      "@id": "contactout:current_company_only",
+      "@type": "xsd:boolean"
+    },
+    "domain": {
+      "@id": "contactout:domain",
+      "@container": "@list"
+    },
+    "industry": {
+      "@id": "contactout:industry",
+      "@container": "@list"
+    },
+    "keyword": {
+      "@id": "contactout:keyword",
+      "@type": "xsd:string"
+    },
+    "company_size": {
+      "@id": "contactout:company_size",
+      "@container": "@list"
+    },
+    "years_of_experience": {
+      "@id": "contactout:years_of_experience",
+      "@container": "@list"
+    },
+    "years_in_current_role": {
+      "@id": "contactout:years_in_current_role",
+      "@container": "@list"
+    },
+    "recently_changed_jobs": {
+      "@id": "contactout:recently_changed_jobs",
+      "@type": "xsd:boolean"
+    },
+    "is_currently_working": {
+      "@id": "contactout:is_currently_working",
+      "@type": "xsd:boolean"
+    },
+    "page": {
+      "@id": "contactout:page",
+      "@type": "xsd:integer"
+    },
+    "page_size": {
+      "@id": "contactout:page_size",
+      "@type": "xsd:integer"
+    },
+    "data_types": {
+      "@id": "contactout:data_types",
+      "@container": "@list"
+    },
+    "reveal_info": {
+      "@id": "contactout:reveal_info",
+      "@type": "xsd:boolean"
+    },
+    "detailed_experience": {
+      "@id": "contactout:detailed_experience",
+      "@type": "xsd:boolean"
+    },
+    "detailed_education": {
+      "@id": "contactout:detailed_education",
+      "@type": "xsd:boolean"
+    },
+    "exclude_job_titles": {
+      "@id": "contactout:exclude_job_titles",
+      "@container": "@list"
+    },
+    "exclude_companies": {
+      "@id": "contactout:exclude_companies",
+      "@container": "@list"
+    },
+    "exclude_companies_filter": {
+      "@id": "contactout:exclude_companies_filter",
+      "@type": "xsd:string"
+    },
+    "PeopleSearchResponse": "contactout:PeopleSearchResponse",
+    "metadata": {
+      "@id": "contactout:metadata"
+    },
+    "contact_info": {
+      "@id": "contactout:contact_info",
+      "@container": "@list"
+    },
+    "contact_availability": {
+      "@id": "contactout:contact_availability",
+      "@container": "@list"
+    },
+    "PeopleCountResponse": "contactout:PeopleCountResponse",
+    "total_results": {
+      "@id": "contactout:total_results",
+      "@type": "xsd:integer"
+    },
+    "estimated_personal_emails": {
+      "@id": "contactout:estimated_personal_emails",
+      "@type": "xsd:integer"
+    },
+    "estimated_work_emails": {
+      "@id": "contactout:estimated_work_emails",
+      "@type": "xsd:integer"
+    },
+    "estimated_phones": {
+      "@id": "contactout:estimated_phones",
+      "@type": "xsd:integer"
+    },
+    "DecisionMakersResponse": "contactout:DecisionMakersResponse",
+    "CompanySearchRequest": "contactout:CompanySearchRequest",
+    "size": {
+      "@id": "contactout:size",
+      "@container": "@list"
+    },
+    "hq_only": {
+      "@id": "contactout:hq_only",
+      "@type": "xsd:boolean"
+    },
+    "industries": {
+      "@id": "contactout:industries",
+      "@container": "@list"
+    },
+    "technologies": {
+      "@id": "contactout:technologies",
+      "@container": "@list"
+    },
+    "min_revenue": {
+      "@id": "contactout:min_revenue",
+      "@type": "xsd:integer"
+    },
+    "max_revenue": {
+      "@id": "contactout:max_revenue",
+      "@type": "xsd:integer"
+    },
+    "year_founded_from": {
+      "@id": "contactout:year_founded_from",
+      "@type": "xsd:integer"
+    },
+    "year_founded_to": {
+      "@id": "contactout:year_founded_to",
+      "@type": "xsd:integer"
+    },
+    "CompanySearchResponse": "contactout:CompanySearchResponse",
+    "EmailToLinkedinResponse": "contactout:EmailToLinkedinResponse",
+    "ContactCheckerPersonalEmailCheckerResponse": "contactout:ContactCheckerPersonalEmailCheckerResponse",
+    "ContactCheckerWorkEmailCheckerResponse": "contactout:ContactCheckerWorkEmailCheckerResponse",
+    "ContactCheckerPhoneNumberCheckerResponse": "contactout:ContactCheckerPhoneNumberCheckerResponse",
+    "HashedEmailRequest": "contactout:HashedEmailRequest",
+    "HashedEmailResponse": "contactout:HashedEmailResponse",
+    "matches": {
+      "@id": "contactout:matches"
+    },
+    "matches.emails": {
+      "@id": "contactout:matches.emails",
+      "@container": "@list"
+    },
+    "matches_found": {
+      "@id": "contactout:matches_found",
+      "@type": "xsd:integer"
+    },
+    "unmatched": {
+      "@id": "contactout:unmatched",
+      "@container": "@list"
+    },
+    "unmatched_count": {
+      "@id": "contactout:unmatched_count",
+      "@type": "xsd:integer"
+    },
+    "EmailVerifierBulkRequest": "contactout:EmailVerifierBulkRequest",
+    "emails": {
+      "@id": "contactout:emails",
+      "@container": "@list"
+    },
+    "EmailVerifierBulkResponse": "contactout:EmailVerifierBulkResponse",
+    "CampaignsListCampaignsResponse": "contactout:CampaignsListCampaignsResponse",
+    "data": {
+      "@id": "contactout:data",
+      "@container": "@list"
+    },
+    "has_more": {
+      "@id": "contactout:has_more",
+      "@type": "xsd:boolean"
+    },
+    "CampaignsAddRecipientsRequest": "contactout:CampaignsAddRecipientsRequest",
+    "recipients": {
+      "@id": "contactout:recipients",
+      "@container": "@list"
+    },
+    "CampaignsAddRecipientsResponse": "contactout:CampaignsAddRecipientsResponse",
+    "success_count": {
+      "@id": "contactout:success_count",
+      "@type": "xsd:integer"
+    },
+    "failure_count": {
+      "@id": "contactout:failure_count",
+      "@type": "xsd:integer"
+    },
+    "results": {
+      "@id": "contactout:results",
+      "@container": "@list"
+    },
+    "message": {
+      "@id": "contactout:message",
+      "@type": "xsd:string"
+    },
+    "CampaignsRemoveRecipientsRequest": "contactout:CampaignsRemoveRecipientsRequest",
+    "CampaignsStartCampaignResponse": "contactout:CampaignsStartCampaignResponse",
+    "data.id": {
+      "@id": "contactout:data.id",
+      "@type": "xsd:string"
+    },
+    "data.status": {
+      "@id": "contactout:data.status",
+      "@type": "xsd:string"
+    }
+  },
+  "@type": "schema:Dataset",
+  "schema:name": "ContactOut API JSON-LD context",
+  "schema:description": "A JSON-LD @context for the objects ContactOut's own API contract declares: one class per component schema, one property per declared field, typed from the contract. Derived by script (derive-json-ld.py, 2026-10-07) from openapi/_ae-authored/contactout-openapi-generated.yml.",
+  "dcterms:created": "2026-10-07",
+  "dcterms:source": [
+    "openapi/_ae-authored/contactout-openapi-generated.yml"
+  ]
+}

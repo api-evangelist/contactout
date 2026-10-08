@@ -1,0 +1,36 @@
+generated: '2026-10-07'
+method: generated
+source: Packaged Agent Skills generated from the ContactOut API reference (https://api.contactout.com) as captured in openapi/_ae-authored/contactout-openapi-generated.yml; every operationId is verified verbatim in that contract; cross-cutting rules cite conventions/, errors/, rate-limits/ and authentication/.
+skills:
+- file: contactout-find-contact-from-linkedin.md
+  name: Find a verified email and phone for a LinkedIn profile
+  api: openapi/_ae-authored/contactout-openapi-generated.yml
+  operations:
+  - contactCheckerWorkEmailChecker
+  - contactCheckerPhoneNumberChecker
+  - contactInfoSingleFromLinkedinProfile
+  - usageStats
+- file: contactout-prospect-search.md
+  name: Count, search and find decision makers
+  api: openapi/_ae-authored/contactout-openapi-generated.yml
+  operations:
+  - peopleCount
+  - peopleSearch
+  - decisionMakers
+  - companySearch
+- file: contactout-verify-emails.md
+  name: Verify email deliverability singly or in bulk
+  api: openapi/_ae-authored/contactout-openapi-generated.yml
+  operations:
+  - emailVerifierSingle
+  - emailVerifierBulk
+  - emailVerifierBulkGet
+- file: contactout-run-campaign.md
+  name: Add recipients to a campaign and start it
+  api: openapi/_ae-authored/contactout-openapi-generated.yml
+  operations:
+  - campaignsListCampaigns
+  - campaignsAddRecipients
+  - campaignsStartCampaign
+  - campaignsStopCampaign
+  - campaignsRemoveRecipients

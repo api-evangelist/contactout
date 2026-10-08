@@ -1,0 +1,165 @@
+overlay: 1.0.0
+info:
+  title: ContactOut API enhancements
+  version: '2026-10-07'
+  description: 'API Evangelist overlay on the generated ContactOut contract: documented per-API rate limits (https://api.contactout.com#rate-limits) and the published MCP tool bound to each operation (mcp/contactout-tool-crosswalk.yml). The contract file itself is never mutated.'
+extends: openapi/_ae-authored/contactout-openapi-generated.yml
+generated: '2026-10-07'
+method: generated
+source:
+- https://api.contactout.com#rate-limits
+- https://api.contactout.com#available-tools
+actions:
+- target: $.paths[*][?(@.operationId=='linkedinProfileFromLinkedinUrl')]
+  update:
+    x-rate-limit: 'Other APIs: 1000 requests per minute'
+    x-rate-limit-source: https://api.contactout.com#rate-limits
+    x-mcp-tools:
+    - LinkedIn Profile from URL
+    x-mcp-server: https://contactout.com/mcp
+- target: $.paths[*][?(@.operationId=='linkedinProfileFromEmailAddress')]
+  update:
+    x-rate-limit: 'Other APIs: 1000 requests per minute'
+    x-rate-limit-source: https://api.contactout.com#rate-limits
+    x-mcp-tools:
+    - LinkedIn Profile from Email
+    x-mcp-server: https://contactout.com/mcp
+- target: $.paths[*][?(@.operationId=='peopleEnrich')]
+  update:
+    x-rate-limit: 'Other APIs: 1000 requests per minute'
+    x-rate-limit-source: https://api.contactout.com#rate-limits
+    x-mcp-tools:
+    - People Enrich
+    x-mcp-server: https://contactout.com/mcp
+- target: $.paths[*][?(@.operationId=='contactInfoSingleFromLinkedinProfile')]
+  update:
+    x-rate-limit: 'Other APIs: 1000 requests per minute'
+    x-rate-limit-source: https://api.contactout.com#rate-limits
+    x-mcp-tools:
+    - Contact Info from LinkedIn Profile
+    x-mcp-server: https://contactout.com/mcp
+- target: $.paths[*][?(@.operationId=='contactInfoBulkV1BulkContactinfo')]
+  update:
+    x-rate-limit: 'Other APIs: 1000 requests per minute'
+    x-rate-limit-source: https://api.contactout.com#rate-limits
+- target: $.paths[*][?(@.operationId=='contactInfoBulkV2BulkContactinfo')]
+  update:
+    x-rate-limit: 'Other APIs: 1000 requests per minute'
+    x-rate-limit-source: https://api.contactout.com#rate-limits
+- target: $.paths[*][?(@.operationId=='contactInfoBulkV2BulkContactinfoGet')]
+  update:
+    x-rate-limit: 'Other APIs: 1000 requests per minute'
+    x-rate-limit-source: https://api.contactout.com#rate-limits
+- target: $.paths[*][?(@.operationId=='companyInformationFromDomains')]
+  update:
+    x-rate-limit: 'Other APIs: 1000 requests per minute'
+    x-rate-limit-source: https://api.contactout.com#rate-limits
+    x-mcp-tools:
+    - Company Information from Domain
+    x-mcp-server: https://contactout.com/mcp
+- target: $.paths[*][?(@.operationId=='peopleSearch')]
+  update:
+    x-rate-limit: 'People Search API: 60 requests per minute'
+    x-rate-limit-source: https://api.contactout.com#rate-limits
+    x-mcp-tools:
+    - People Search
+    x-mcp-server: https://contactout.com/mcp
+- target: $.paths[*][?(@.operationId=='peopleCount')]
+  update:
+    x-rate-limit: 'Other APIs: 1000 requests per minute'
+    x-rate-limit-source: https://api.contactout.com#rate-limits
+    x-mcp-tools:
+    - People Count
+    x-mcp-server: https://contactout.com/mcp
+- target: $.paths[*][?(@.operationId=='decisionMakers')]
+  update:
+    x-rate-limit: 'Other APIs: 1000 requests per minute'
+    x-rate-limit-source: https://api.contactout.com#rate-limits
+    x-mcp-tools:
+    - Decision Makers
+    x-mcp-server: https://contactout.com/mcp
+- target: $.paths[*][?(@.operationId=='companySearch')]
+  update:
+    x-rate-limit: 'Other APIs: 1000 requests per minute'
+    x-rate-limit-source: https://api.contactout.com#rate-limits
+    x-mcp-tools:
+    - Company Search
+    x-mcp-server: https://contactout.com/mcp
+- target: $.paths[*][?(@.operationId=='emailToLinkedin')]
+  update:
+    x-rate-limit: 'Other APIs: 1000 requests per minute'
+    x-rate-limit-source: https://api.contactout.com#rate-limits
+    x-mcp-tools:
+    - LinkedIn URL from Email
+    x-mcp-server: https://contactout.com/mcp
+- target: $.paths[*][?(@.operationId=='contactCheckerPersonalEmailChecker')]
+  update:
+    x-rate-limit: 'Contact Checker APIs: 150 requests per minute'
+    x-rate-limit-source: https://api.contactout.com#rate-limits
+    x-mcp-tools:
+    - Personal Email Checker
+    x-mcp-server: https://contactout.com/mcp
+- target: $.paths[*][?(@.operationId=='contactCheckerWorkEmailChecker')]
+  update:
+    x-rate-limit: 'Contact Checker APIs: 150 requests per minute'
+    x-rate-limit-source: https://api.contactout.com#rate-limits
+    x-mcp-tools:
+    - Work Email Checker
+    x-mcp-server: https://contactout.com/mcp
+- target: $.paths[*][?(@.operationId=='contactCheckerPhoneNumberChecker')]
+  update:
+    x-rate-limit: 'Contact Checker APIs: 150 requests per minute'
+    x-rate-limit-source: https://api.contactout.com#rate-limits
+    x-mcp-tools:
+    - Phone Checker
+    x-mcp-server: https://contactout.com/mcp
+- target: $.paths[*][?(@.operationId=='hashedEmail')]
+  update:
+    x-rate-limit: 'Other APIs: 1000 requests per minute'
+    x-rate-limit-source: https://api.contactout.com#rate-limits
+- target: $.paths[*][?(@.operationId=='emailVerifierSingle')]
+  update:
+    x-rate-limit: 'Other APIs: 1000 requests per minute'
+    x-rate-limit-source: https://api.contactout.com#rate-limits
+    x-mcp-tools:
+    - Email Verifier
+    x-mcp-server: https://contactout.com/mcp
+- target: $.paths[*][?(@.operationId=='emailVerifierBulk')]
+  update:
+    x-rate-limit: 'Other APIs: 1000 requests per minute'
+    x-rate-limit-source: https://api.contactout.com#rate-limits
+- target: $.paths[*][?(@.operationId=='emailVerifierBulkGet')]
+  update:
+    x-rate-limit: 'Other APIs: 1000 requests per minute'
+    x-rate-limit-source: https://api.contactout.com#rate-limits
+- target: $.paths[*][?(@.operationId=='campaignsListCampaigns')]
+  update:
+    x-rate-limit: 'Other APIs: 1000 requests per minute'
+    x-rate-limit-source: https://api.contactout.com#rate-limits
+- target: $.paths[*][?(@.operationId=='campaignsGetCampaign')]
+  update:
+    x-rate-limit: 'Other APIs: 1000 requests per minute'
+    x-rate-limit-source: https://api.contactout.com#rate-limits
+- target: $.paths[*][?(@.operationId=='campaignsAddRecipients')]
+  update:
+    x-rate-limit: 'Other APIs: 1000 requests per minute'
+    x-rate-limit-source: https://api.contactout.com#rate-limits
+- target: $.paths[*][?(@.operationId=='campaignsRemoveRecipients')]
+  update:
+    x-rate-limit: 'Other APIs: 1000 requests per minute'
+    x-rate-limit-source: https://api.contactout.com#rate-limits
+- target: $.paths[*][?(@.operationId=='campaignsStartCampaign')]
+  update:
+    x-rate-limit: 'Other APIs: 1000 requests per minute'
+    x-rate-limit-source: https://api.contactout.com#rate-limits
+- target: $.paths[*][?(@.operationId=='campaignsStopCampaign')]
+  update:
+    x-rate-limit: 'Other APIs: 1000 requests per minute'
+    x-rate-limit-source: https://api.contactout.com#rate-limits
+- target: $.paths[*][?(@.operationId=='usageStats')]
+  update:
+    x-rate-limit: 'Other APIs: 1000 requests per minute'
+    x-rate-limit-source: https://api.contactout.com#rate-limits
+    x-mcp-tools:
+    - API Usage Stats
+    x-mcp-server: https://contactout.com/mcp

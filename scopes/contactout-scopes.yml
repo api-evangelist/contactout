@@ -1,0 +1,9 @@
+generated: '2026-10-07'
+method: searched
+source: https://contactout.com/.well-known/oauth-authorization-server
+docs: https://api.contactout.com#contactout-mcp
+issuer: https://contactout.com
+note: OAuth 2.0 (authorization code + PKCE S256, refresh_token, dynamic client registration) is used only for the hosted MCP server at https://contactout.com/mcp; the REST API authenticates with an API key in the token header and has no scopes. The authorization-server metadata advertises a single scope.
+scopes:
+- name: mcp:use
+  description: The only scope in scopes_supported of the authorization-server metadata; grants an MCP client use of the ContactOut MCP server on behalf of the user's API token.

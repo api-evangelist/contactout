@@ -1,0 +1,168 @@
+generated: '2026-10-07'
+method: derived
+generator: derive-vocabulary.py
+source: openapi/_ae-authored/contactout-openapi-generated.yml
+vocabulary:
+  name: ContactOut Domain Vocabulary
+  description: 'Terms declared by ContactOut''s own API contract: its resource groups, objects and enumerations, with the contract''s definitions.
+    Derived, not authored.'
+  version: '2026-10-07'
+  terms:
+  - term: LinkedinProfileFromLinkedinUrlResponse
+    definition: 'Object declared by the contract with fields: status_code, profile.'
+    tags:
+    - Object
+    source: openapi/_ae-authored/contactout-openapi-generated.yml#/components/schemas/LinkedinProfileFromLinkedinUrlResponse
+  - term: LinkedinProfileFromEmailAddressResponse
+    definition: 'Object declared by the contract with fields: status_code, profile.'
+    tags:
+    - Object
+    source: openapi/_ae-authored/contactout-openapi-generated.yml#/components/schemas/LinkedinProfileFromEmailAddressResponse
+  - term: PeopleEnrichRequest
+    definition: 'Object declared by the contract with fields: linkedin_url, email, phone, full_name, first_name, last_name, company, company_domain,
+      education, location, job_title, . (1 more)'
+    tags:
+    - Object
+    source: openapi/_ae-authored/contactout-openapi-generated.yml#/components/schemas/PeopleEnrichRequest
+  - term: PeopleEnrichResponse
+    definition: 'Object declared by the contract with fields: status_code, profile.'
+    tags:
+    - Object
+    source: openapi/_ae-authored/contactout-openapi-generated.yml#/components/schemas/PeopleEnrichResponse
+  - term: ContactInfoSingleFromLinkedinProfileResponse
+    definition: 'Object declared by the contract with fields: status_code, profile.'
+    tags:
+    - Object
+    source: openapi/_ae-authored/contactout-openapi-generated.yml#/components/schemas/ContactInfoSingleFromLinkedinProfileResponse
+  - term: ContactInfoBulkV1BulkContactinfoRequest
+    definition: 'Object declared by the contract with fields: profiles, include_phone, email_type.'
+    tags:
+    - Object
+    source: openapi/_ae-authored/contactout-openapi-generated.yml#/components/schemas/ContactInfoBulkV1BulkContactinfoRequest
+  - term: ContactInfoBulkV1BulkContactinfoResponse
+    definition: 'Object declared by the contract with fields: status_code, profiles.'
+    tags:
+    - Object
+    source: openapi/_ae-authored/contactout-openapi-generated.yml#/components/schemas/ContactInfoBulkV1BulkContactinfoResponse
+  - term: ContactInfoBulkV2BulkContactinfoRequest
+    definition: 'Object declared by the contract with fields: callback_url, profiles, include_phone, email_type.'
+    tags:
+    - Object
+    source: openapi/_ae-authored/contactout-openapi-generated.yml#/components/schemas/ContactInfoBulkV2BulkContactinfoRequest
+  - term: ContactInfoBulkV2BulkContactinfoResponse
+    definition: 'Object declared by the contract with fields: status, job_id.'
+    tags:
+    - Object
+    source: openapi/_ae-authored/contactout-openapi-generated.yml#/components/schemas/ContactInfoBulkV2BulkContactinfoResponse
+  - term: ContactInfoBulkV2BulkContactinfoGetResponse
+    definition: 'Object declared by the contract with fields: uuid, status, result.'
+    tags:
+    - Object
+    source: openapi/_ae-authored/contactout-openapi-generated.yml#/components/schemas/ContactInfoBulkV2BulkContactinfoGetResponse
+  - term: CompanyInformationFromDomainsRequest
+    definition: 'Object declared by the contract with fields: domains.'
+    tags:
+    - Object
+    source: openapi/_ae-authored/contactout-openapi-generated.yml#/components/schemas/CompanyInformationFromDomainsRequest
+  - term: CompanyInformationFromDomainsResponse
+    definition: 'Object declared by the contract with fields: status_code, companies.'
+    tags:
+    - Object
+    source: openapi/_ae-authored/contactout-openapi-generated.yml#/components/schemas/CompanyInformationFromDomainsResponse
+  - term: PeopleSearchRequest
+    definition: 'Object declared by the contract with fields: name, job_title, past_job_title, job_function, seniority, current_titles_only, include_related_job_titles,
+      match_experience, skills, languages, education, educations. (25 more)'
+    tags:
+    - Object
+    source: openapi/_ae-authored/contactout-openapi-generated.yml#/components/schemas/PeopleSearchRequest
+  - term: PeopleSearchResponse
+    definition: 'Object declared by the contract with fields: status_code, metadata, profiles, contact_info, contact_availability.'
+    tags:
+    - Object
+    source: openapi/_ae-authored/contactout-openapi-generated.yml#/components/schemas/PeopleSearchResponse
+  - term: PeopleCountResponse
+    definition: 'Object declared by the contract with fields: status_code, total_results, estimated_personal_emails, estimated_work_emails, estimated_phones.'
+    tags:
+    - Object
+    source: openapi/_ae-authored/contactout-openapi-generated.yml#/components/schemas/PeopleCountResponse
+  - term: DecisionMakersResponse
+    definition: 'Object declared by the contract with fields: contact_info, contact_availability.'
+    tags:
+    - Object
+    source: openapi/_ae-authored/contactout-openapi-generated.yml#/components/schemas/DecisionMakersResponse
+  - term: CompanySearchRequest
+    definition: 'Object declared by the contract with fields: linkedin_url, name, domain, size, hq_only, location, industries, technologies, min_revenue,
+      max_revenue, year_founded_from, year_founded_to.'
+    tags:
+    - Object
+    source: openapi/_ae-authored/contactout-openapi-generated.yml#/components/schemas/CompanySearchRequest
+  - term: CompanySearchResponse
+    definition: 'Object declared by the contract with fields: status_code, companies.'
+    tags:
+    - Object
+    source: openapi/_ae-authored/contactout-openapi-generated.yml#/components/schemas/CompanySearchResponse
+  - term: EmailToLinkedinResponse
+    definition: 'Object declared by the contract with fields: status_code, profile.'
+    tags:
+    - Object
+    source: openapi/_ae-authored/contactout-openapi-generated.yml#/components/schemas/EmailToLinkedinResponse
+  - term: ContactCheckerPersonalEmailCheckerResponse
+    definition: 'Object declared by the contract with fields: status_code, profile.'
+    tags:
+    - Object
+    source: openapi/_ae-authored/contactout-openapi-generated.yml#/components/schemas/ContactCheckerPersonalEmailCheckerResponse
+  - term: ContactCheckerWorkEmailCheckerResponse
+    definition: 'Object declared by the contract with fields: status_code, profile.'
+    tags:
+    - Object
+    source: openapi/_ae-authored/contactout-openapi-generated.yml#/components/schemas/ContactCheckerWorkEmailCheckerResponse
+  - term: ContactCheckerPhoneNumberCheckerResponse
+    definition: 'Object declared by the contract with fields: status_code, profile.'
+    tags:
+    - Object
+    source: openapi/_ae-authored/contactout-openapi-generated.yml#/components/schemas/ContactCheckerPhoneNumberCheckerResponse
+  - term: HashedEmailRequest
+    definition: 'Object declared by the contract with fields: profiles.'
+    tags:
+    - Object
+    source: openapi/_ae-authored/contactout-openapi-generated.yml#/components/schemas/HashedEmailRequest
+  - term: HashedEmailResponse
+    definition: 'Object declared by the contract with fields: status_code, matches, matches.emails, matches_found, unmatched, unmatched_count.'
+    tags:
+    - Object
+    source: openapi/_ae-authored/contactout-openapi-generated.yml#/components/schemas/HashedEmailResponse
+  - term: EmailVerifierBulkRequest
+    definition: 'Object declared by the contract with fields: callback_url, emails.'
+    tags:
+    - Object
+    source: openapi/_ae-authored/contactout-openapi-generated.yml#/components/schemas/EmailVerifierBulkRequest
+  - term: EmailVerifierBulkResponse
+    definition: 'Object declared by the contract with fields: uuid, status, result.'
+    tags:
+    - Object
+    source: openapi/_ae-authored/contactout-openapi-generated.yml#/components/schemas/EmailVerifierBulkResponse
+  - term: CampaignsListCampaignsResponse
+    definition: 'Object declared by the contract with fields: data, metadata, page, page_size, total_results, has_more.'
+    tags:
+    - Object
+    source: openapi/_ae-authored/contactout-openapi-generated.yml#/components/schemas/CampaignsListCampaignsResponse
+  - term: CampaignsAddRecipientsRequest
+    definition: 'Object declared by the contract with fields: recipients.'
+    tags:
+    - Object
+    source: openapi/_ae-authored/contactout-openapi-generated.yml#/components/schemas/CampaignsAddRecipientsRequest
+  - term: CampaignsAddRecipientsResponse
+    definition: 'Object declared by the contract with fields: success_count, failure_count, results, email, status, message.'
+    tags:
+    - Object
+    source: openapi/_ae-authored/contactout-openapi-generated.yml#/components/schemas/CampaignsAddRecipientsResponse
+  - term: CampaignsRemoveRecipientsRequest
+    definition: 'Object declared by the contract with fields: recipients.'
+    tags:
+    - Object
+    source: openapi/_ae-authored/contactout-openapi-generated.yml#/components/schemas/CampaignsRemoveRecipientsRequest
+  - term: CampaignsStartCampaignResponse
+    definition: 'Object declared by the contract with fields: status_code, message, data, data.id, data.status.'
+    tags:
+    - Object
+    source: openapi/_ae-authored/contactout-openapi-generated.yml#/components/schemas/CampaignsStartCampaignResponse

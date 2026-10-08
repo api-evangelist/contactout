@@ -1,0 +1,99 @@
+generated: '2026-10-07'
+method: derived
+source: the pre-flight dossier, apis.yml pointers, spec servers, well-known, vendors -- nothing fetched here
+generator: derive-hosts.py
+summary:
+  hosts: 6
+  own: 4
+  other_domain: 1
+  platform: 1
+  roles:
+  - docs
+  - marketing
+  - other
+  - source
+  - status
+  - website
+hosts:
+- host: api.contactout.com
+  found_by:
+  - pointer
+  - apis[]
+  - probed
+  - site-links
+  - contract-discovery
+  - well-known
+  types:
+  - Documentation
+  - APIReference
+  serves:
+  - api
+  - docs
+  registrable_domain: contactout.com
+  role: docs
+  relation: own
+- host: blog.contactout.com
+  found_by:
+  - pointer
+  - probed
+  - site-links
+  - contract-discovery
+  - well-known
+  types:
+  - Blog
+  serves: []
+  registrable_domain: contactout.com
+  role: marketing
+  relation: own
+- host: contactout.com
+  found_by:
+  - pointer
+  - probed
+  - contract-discovery
+  - well-known
+  - vendor-detect
+  types:
+  - Website
+  - Pricing
+  - Login
+  - SignUp
+  - TermsOfService
+  - PrivacyPolicy
+  - LLMsTxt
+  serves:
+  - cdn
+  vendor: cloudflare
+  registrable_domain: contactout.com
+  role: website
+  relation: own
+- host: contactout.freshdesk.com
+  found_by:
+  - pointer
+  types:
+  - HelpCenter
+  serves: []
+  registrable_domain: freshdesk.com
+  role: other
+  relation: other-domain
+- host: github.com
+  found_by:
+  - pointer
+  types:
+  - GitHubOrganization
+  serves: []
+  registrable_domain: github.com
+  role: source
+  relation: platform
+- host: status.contactout.com
+  found_by:
+  - pointer
+  - probed
+  - site-links
+  - contract-discovery
+  - well-known
+  types:
+  - StatusPage
+  serves: []
+  registrable_domain: contactout.com
+  role: status
+  relation: own

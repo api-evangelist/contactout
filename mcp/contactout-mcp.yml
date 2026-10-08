@@ -1,0 +1,71 @@
+name: ContactOut MCP
+generated: '2026-10-07'
+method: searched
+status: official
+source:
+- https://api.contactout.com#contactout-mcp
+- https://contactout.com/.well-known/oauth-authorization-server
+server:
+  name: ContactOut MCP
+  url: https://contactout.com/mcp
+  transport: streamable-http
+  docs: https://api.contactout.com#contactout-mcp
+  description: 'ContactOut provides an MCP (Model Context Protocol) server that lets AI assistants like Claude, Cursor, and other MCP-compatible clients call ContactOut APIs directly. Use natural language to find contacts, enrich profiles, verify emails, search companies, and more.'
+deployment:
+  mode: remote
+  endpoint: https://contactout.com/mcp
+  auth: oauth
+  verified: probed
+  note: 'The reference says "Add https://contactout.com/mcp as an MCP server in your AI application. Complete the OAuth login using your ContactOut API token." Pre-flight probe 2026-10-07: POST tools/list to https://contactout.com/mcp returned 401 (control path 404), so the endpoint exists and is OAuth-gated; a plain GET returns 405. https://api.contactout.com/mcp also answers 401 to the same probe but is not documented. No stdio package is published.'
+auth:
+  type: oauth2
+  flow: authorization_code
+  pkce: S256
+  authorization_server_metadata: https://contactout.com/.well-known/oauth-authorization-server
+  issuer: https://contactout.com
+  authorization_endpoint: https://contactout.com/api-users/oauth/authorize
+  token_endpoint: https://contactout.com/api-users/oauth/token
+  registration_endpoint: https://contactout.com/api-users/oauth/register
+  grant_types: [authorization_code, refresh_token]
+  scopes: ['mcp:use']
+  note: An API key (obtained by signing up or booking a meeting) is required; the OAuth login is completed with the ContactOut API token.
+tools_evidence:
+  l3: table
+  evidence_url: https://api.contactout.com#available-tools
+  note: The 15 tools below are the provider's PUBLISHED "Available Tools" table on the API reference. They were not observed from a live tools/list call, which requires OAuth (401 anonymously); tool input schemas are therefore not recorded.
+tools:
+- name: People Search
+  description: Search profiles by name, title, company, location, skills, and more
+- name: People Enrich
+  description: Enrich a profile given a LinkedIn URL
+- name: Contact Info from LinkedIn Profile
+  description: Get contact info (email/phone) from a LinkedIn URL
+- name: People Count
+  description: Count profiles matching search criteria
+- name: LinkedIn Profile from URL
+  description: Enrich a LinkedIn profile URL
+- name: LinkedIn Profile from Email
+  description: Convert an email address into a LinkedIn profile and contact info
+- name: LinkedIn URL from Email
+  description: Get a LinkedIn profile URL from an email address
+- name: Email Verifier
+  description: Verify deliverability of an email address
+- name: Personal Email Checker
+  description: Check if a personal email exists for a profile
+- name: Work Email Checker
+  description: Check if a work email exists for a profile
+- name: Phone Checker
+  description: Check if a phone number exists for a profile
+- name: Decision Makers
+  description: Get key decision makers at a company
+- name: Company Search
+  description: Search company profiles
+- name: Company Information from Domain
+  description: Get company info from domain names
+- name: API Usage Stats
+  description: Get your API usage stats and remaining credits
+sample_prompts:
+- Get me a list of 100 companies located in California from the Computer Software industry and have 500+ employees
+- Find the decision makers at ABC Company and get their work email and phone number
+- Find senior ML engineers in London who studied at Stanford University with at least 10 years of experience along with their personal email and phone
+- Enrich these personal email signups from last week with the name, job title, company name, company size, industry and work email so I can personalise my outreach

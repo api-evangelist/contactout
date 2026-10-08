@@ -1,23 +1,157 @@
 aid: contactout
 name: ContactOut
-description: 'ContactOut is a company surfaced via the API Evangelist harvest backlog (source: monid-connectors)
-  and added to the network as a stub for full-pipeline profiling.'
+description: ContactOut is a B2B email finder and professional contact data platform (ContactOut Pty Ltd, founded 2015, San Francisco) that provides verified personal and work emails, phone numbers and enriched people and company profiles for 350M professionals across 40M companies, delivered through a Chrome extension, search portal, bulk tools, a REST API at api.contactout.com and a hosted MCP server at contactout.com/mcp. Used by recruiters and sales teams; GDPR and CCPA compliant with a published opt-out, and intended for professional B2B use only.
 url: https://raw.githubusercontent.com/api-evangelist/contactout/refs/heads/main/apis.yml
 x-type: company
 x-source: harvest:monid-connectors
-x-tier: stub
-x-tier-reason: harvest
+x-tier: profiled
+x-tier-reason: enrichment pass 2026-10-07 (local-v5; was harvest)
 specificationVersion: '0.20'
 created: '2026-10-07'
 modified: '2026-10-07'
 tags:
 - Company
-apis: []
+- Contact Data
+- Email Finder
+- Data Enrichment
+- People Search
+- Company Search
+- Email Verification
+- Sales Intelligence
+- Recruiting
+- B2B Data
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+image: https://contactout.com/images/logo-square-200px.png
 common:
+- type: JSONLD
+  url: json-ld/contactout-context.jsonld
+- type: Vocabulary
+  url: vocabulary/contactout-vocabulary.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: Webhooks
+  url: asyncapi/contactout-webhooks.yml
+- type: DataModel
+  url: data-model/contactout-data-model.yml
+- type: Conventions
+  url: conventions/contactout-conventions.yml
+- type: Overlay
+  url: overlays/contactout-openapi-generated-overlay.yaml
+- type: ToolCrosswalk
+  url: mcp/contactout-tool-crosswalk.yml
+- type: RateLimits
+  url: rate-limits/contactout-rate-limits.yml
+- type: Plans
+  url: plans/contactout-plans-pricing.yml
+- type: Spectral
+  url: rules/contactout-rules.yml
+- type: Authentication
+  url: authentication/contactout-authentication.yml
+- type: OAuthScopes
+  url: scopes/contactout-scopes.yml
+- type: Lifecycle
+  url: lifecycle/contactout-lifecycle.yml
+- type: ErrorCatalog
+  url: errors/contactout-problem-types.yml
+- type: Conformance
+  url: conformance/contactout-conformance.yml
+- type: LLMsTxt
+  url: llms/contactout-llms.txt
+- type: MCPServer
+  url: mcp/contactout-mcp.yml
+- type: WellKnown
+  url: well-known/contactout-well-known.yml
+- type: Hosts
+  url: hosts/contactout-hosts.yml
+- type: Vendors
+  url: vendors/contactout-vendors.yml
+- type: SDKs
+  url: packages/contactout-packages.yml
+- type: Packages
+  url: packages/contactout-packages.yml
+- type: DomainSecurity
+  url: security/contactout-domain-security.yml
 - type: Website
   url: https://contactout.com
+- type: Documentation
+  url: https://api.contactout.com
+- type: APIReference
+  url: https://api.contactout.com
+- type: Blog
+  url: https://blog.contactout.com/
+- type: StatusPage
+  url: https://status.contactout.com/
+- type: Pricing
+  url: https://contactout.com/pricing
+- type: Login
+  url: https://contactout.com/login
+- type: SignUp
+  url: https://contactout.com/register?from=home
+- type: TermsOfService
+  url: https://contactout.com/terms
+- type: PrivacyPolicy
+  url: https://contactout.com/privacy
+- type: GitHubOrganization
+  url: https://github.com/contactout
+- type: HelpCenter
+  url: https://contactout.freshdesk.com/support/home
+- type: LLMsTxt
+  url: https://contactout.com/llms.txt
+apis:
+- name: ContactOut API
+  description: 'REST API for B2B contact data: enrich LinkedIn profiles and email addresses with verified work and personal emails, phone numbers and profile details; search and count people by criteria; search companies and enrich domains; find decision makers; check whether an email or phone exists for a profile without revealing it; verify email deliverability singly or in batch (with a webhook callback); manage outreach campaigns; and read API usage stats and remaining credits. Authenticated with an API token header; credit-metered per result.'
+  humanURL: https://api.contactout.com
+  baseURL: https://api.contactout.com
+  tags:
+  - Contact Data
+  - Email Finder
+  - Data Enrichment
+  - People Search
+  - Company Search
+  - Email Verification
+  - Sales Intelligence
+  - Recruiting
+  properties:
+  - type: OpenAPI
+    url: openapi/_ae-authored/contactout-openapi-generated.yml
+  - type: Documentation
+    url: https://api.contactout.com
+  - type: APIReference
+    url: https://api.contactout.com
+  - type: JSONSchema
+    url: json-schema/contactout-people-search-request-schema.json
+  - type: JSONSchema
+    url: json-schema/contactout-linkedin-profile-from-linkedin-url-response-schema.json
+  - type: JSONSchema
+    url: json-schema/contactout-linkedin-profile-from-email-address-response-schema.json
+  - type: JSONSchema
+    url: json-schema/contactout-people-enrich-response-schema.json
+  - type: JSONSchema
+    url: json-schema/contactout-company-search-request-schema.json
+  - type: JSONSchema
+    url: json-schema/contactout-company-information-from-domains-response-schema.json
+  aid: contactout:contactout-api-2
+  image: https://contactout.com/images/logo-square-200px.png
+x-coverage:
+  state: covered
+  reason: covered
+  detail: 'The API reference at api.contactout.com documents 27 REST operations and a hosted OAuth-gated MCP server at contactout.com/mcp; no provider-published machine-readable contract exists, so the OpenAPI was generated from that reference (x-generated-from: documentation).'
+  evidence:
+  - url: https://api.contactout.com
+    status: 200
+  - url: https://contactout.com/.well-known/oauth-authorization-server
+    status: 200
+  - url: https://contactout.com/mcp
+    status: 401
+  - url: https://api.contactout.com/openapi.json
+    status: 404
+  checked: '2026-10-07'
+x-enrichment:
+  date: '2026-10-07'
+  status: enriched
+  artifacts_added: 37
+  pass: local-v5

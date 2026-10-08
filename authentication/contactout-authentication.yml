@@ -1,0 +1,34 @@
+generated: '2026-10-07'
+method: searched
+source:
+- https://api.contactout.com#authentication
+- https://contactout.com/.well-known/oauth-authorization-server
+docs: https://api.contactout.com#authentication
+summary: 'REST API: an API key sent in a custom "token" request header on every request (the curl example also sends "authorization: basic"). Keys are issued by ContactOut after booking a meeting. The hosted MCP server uses OAuth 2.0 authorization code with PKCE, completed with the same API token.'
+schemes:
+- name: apiToken
+  type: apiKey
+  in: header
+  parameter: token
+  description: 'ContactOut uses API keys to allow access to the API. You can request an API key by booking a meeting. ContactOut expects the API key to be included in all API requests to the server in a header that looks like the following: token : <YOUR_API_TOKEN>'
+  example_headers:
+  - 'authorization: basic'
+  - 'token: <YOUR_API_TOKEN>'
+  surfaces: [REST API]
+  obtain: https://contactout.com/meeting?utm_source=api_docs
+- name: mcpOAuth
+  type: oauth2
+  flows:
+    authorizationCode:
+      authorizationUrl: https://contactout.com/api-users/oauth/authorize
+      tokenUrl: https://contactout.com/api-users/oauth/token
+      refreshUrl: https://contactout.com/api-users/oauth/token
+      scopes:
+        mcp:use: Use the ContactOut MCP server
+  pkce: S256
+  dynamic_client_registration: https://contactout.com/api-users/oauth/register
+  token_endpoint_auth_methods: [client_secret_basic, client_secret_post]
+  metadata: https://contactout.com/.well-known/oauth-authorization-server
+  surfaces: [MCP server https://contactout.com/mcp]
+notes:
+- 'The ai-info page (https://contactout.com/ai-info) summarises authentication as "Authorization: Bearer"; the API reference, which is the developer source, documents the token header shown above.'

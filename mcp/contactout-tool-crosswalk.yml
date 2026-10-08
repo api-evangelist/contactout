@@ -1,0 +1,144 @@
+generated: '2026-10-07'
+method: derived
+source:
+- mcp/contactout-mcp.yml
+- openapi/_ae-authored/contactout-openapi-generated.yml
+- https://api.contactout.com#available-tools
+note: The MCP tool names are the providers published "Available Tools" table; the live tools/list is OAuth-gated (401), so inputSchemas were not observed and each tool is bound by its documented one-line description to the REST operation with the same documented purpose. Confidence is medium where the description could fit more than one operation.
+surfaces:
+  openapi:
+    path: openapi/_ae-authored/contactout-openapi-generated.yml
+    operations: 27
+    gated: false
+    note: generated from the published reference
+  mcp:
+    url: https://contactout.com/mcp
+    gated: true
+    auth: oauth2 (mcp:use)
+  graphql: null
+crosswalk:
+- tool: People Search
+  category: people
+  rest:
+  - peopleSearch
+  binding: documented purpose match
+  confidence: high
+- tool: People Enrich
+  category: people
+  rest:
+  - peopleEnrich
+  binding: documented purpose match
+  confidence: medium
+  note: POST /v1/people/enrich takes a LinkedIn URL or email plus identifiers; the tool description ("Enrich a profile given a LinkedIn URL") also fits GET /v1/linkedin/enrich.
+- tool: Contact Info from LinkedIn Profile
+  category: people
+  rest:
+  - contactInfoSingleFromLinkedinProfile
+  binding: documented purpose match
+  confidence: high
+- tool: People Count
+  category: people
+  rest:
+  - peopleCount
+  binding: documented purpose match
+  confidence: high
+- tool: LinkedIn Profile from URL
+  category: people
+  rest:
+  - linkedinProfileFromLinkedinUrl
+  binding: documented purpose match
+  confidence: medium
+  note: GET /v1/linkedin/enrich returns profile details for a LinkedIn URL; overlaps with People Enrich.
+- tool: LinkedIn Profile from Email
+  category: people
+  rest:
+  - linkedinProfileFromEmailAddress
+  binding: documented purpose match
+  confidence: medium
+  note: GET /v1/email/enrich converts an email into a LinkedIn profile with contact info.
+- tool: LinkedIn URL from Email
+  category: people
+  rest:
+  - emailToLinkedin
+  binding: documented purpose match
+  confidence: high
+- tool: Email Verifier
+  category: people
+  rest:
+  - emailVerifierSingle
+  binding: documented purpose match
+  confidence: high
+- tool: Personal Email Checker
+  category: people
+  rest:
+  - contactCheckerPersonalEmailChecker
+  binding: documented purpose match
+  confidence: high
+- tool: Work Email Checker
+  category: people
+  rest:
+  - contactCheckerWorkEmailChecker
+  binding: documented purpose match
+  confidence: high
+- tool: Phone Checker
+  category: people
+  rest:
+  - contactCheckerPhoneNumberChecker
+  binding: documented purpose match
+  confidence: high
+- tool: Decision Makers
+  category: company
+  rest:
+  - decisionMakers
+  binding: documented purpose match
+  confidence: high
+- tool: Company Search
+  category: company
+  rest:
+  - companySearch
+  binding: documented purpose match
+  confidence: high
+- tool: Company Information from Domain
+  category: company
+  rest:
+  - companyInformationFromDomains
+  binding: documented purpose match
+  confidence: high
+- tool: API Usage Stats
+  category: account
+  rest:
+  - usageStats
+  binding: documented purpose match
+  confidence: high
+mcp_only: []
+rest_only:
+- operation: contactInfoBulkV1BulkContactinfo
+  reason: 'no documented MCP tool: bulk/batch job'
+- operation: contactInfoBulkV2BulkContactinfo
+  reason: 'no documented MCP tool: bulk/batch job'
+- operation: contactInfoBulkV2BulkContactinfoGet
+  reason: 'no documented MCP tool: bulk/batch job'
+- operation: hashedEmail
+  reason: 'no documented MCP tool: hashed-email identifiers endpoint'
+- operation: emailVerifierBulk
+  reason: 'no documented MCP tool: bulk/batch job'
+- operation: emailVerifierBulkGet
+  reason: 'no documented MCP tool: bulk/batch job'
+- operation: campaignsListCampaigns
+  reason: 'no documented MCP tool: campaign management'
+- operation: campaignsGetCampaign
+  reason: 'no documented MCP tool: campaign management'
+- operation: campaignsAddRecipients
+  reason: 'no documented MCP tool: campaign management'
+- operation: campaignsRemoveRecipients
+  reason: 'no documented MCP tool: campaign management'
+- operation: campaignsStartCampaign
+  reason: 'no documented MCP tool: campaign management'
+- operation: campaignsStopCampaign
+  reason: 'no documented MCP tool: campaign management'
+coverage:
+  tools: 15
+  tools_mapped: 15
+  operations: 27
+  operations_with_tool: 15
+  rest_only: 12

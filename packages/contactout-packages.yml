@@ -1,0 +1,20 @@
+generated: '2026-10-07'
+method: searched
+source:
+- https://registry.npmjs.org/@contactout%2Fn8n-nodes-contactout
+- https://github.com/contactout/n8n-nodes-contactout
+- https://api.contactout.com
+packages:
+- name: '@contactout/n8n-nodes-contactout'
+  registry: npm
+  url: https://www.npmjs.com/package/@contactout/n8n-nodes-contactout
+  repository: https://github.com/contactout/n8n-nodes-contactout
+  language: TypeScript
+  kind: integration-node
+  official: true
+  version: 0.1.5
+  published: '2026-04-22'
+  license: MIT
+  note: n8n community node for the ContactOut API (find emails and phone numbers from LinkedIn profiles), published from the company's own GitHub organization (github.com/contactout). It is an n8n workflow node rather than a general-purpose client library.
+notes:
+- 'No first-party client SDK was found: the API reference documents shell (curl) examples only; registry lookups for contactout on npm, PyPI and RubyGems and @contactout/mcp and contactout-mcp on npm all returned 404 (2026-10-07). The GitHub org''s other repos (campaigns, data-import-scripts, ElasticsearchDSL) are not API clients.'
