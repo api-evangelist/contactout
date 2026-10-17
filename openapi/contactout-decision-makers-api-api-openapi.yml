@@ -1,0 +1,119 @@
+openapi: 3.2.0
+info:
+  title: ContactOut Decision Makers API
+  version: v1
+  summary: 'B2B contact data: people and company enrichment, search, contact checks, email verification, campaigns and usage stats.'
+  description: Welcome to ContactOut's API. Find anyone's email & phone number 10x faster with the most powerful sales and recruitment intelligence software available. (Generated from the published API reference at https://api.contactout.com; every operation carries x-source pointing at the section it was read from.)
+  contact:
+    name: ContactOut
+    url: https://contactout.com/meeting?utm_source=api_docs
+  termsOfService: https://contactout.com/terms
+  x-generated-from: documentation
+  x-generated-on: '2026-10-07'
+  x-generator: 'api-evangelist enrichment pass: deterministic parse of the Slate API reference HTML (headings, parameter tables, example blocks); the pipeline generator generate-contract-from-docs.py was run first and its path-collapse heuristic merged the literal resources linkedin/email/domain into a {v1id} template, so its output was replaced by this parse'
+servers:
+- url: https://api.contactout.com
+security:
+- apiToken: []
+tags:
+- name: Decision Makers API
+paths:
+  /v1/people/decision-makers:
+    get:
+      summary: Decision Makers API
+      tags:
+      - Decision Makers API
+      operationId: decisionMakers
+      description: GET https://api.contactout.com/v1/people/decision-makers?{domain=&name=&linkedin_url=&reveal_info=}
+      x-source: https://api.contactout.com#usage-stats-http-request
+      x-section: Decision Makers API
+      parameters:
+      - name: linkedin_url
+        in: query
+        required: false
+        schema:
+          type: string
+        description: The fully formed URL of the company's LinkedIn profile. URL must begin with http and must contain linkedin.com/company/. Accepts both the numeric or string version of the URL, e.g. https://linkedin.com/company/contactout or https://linkedin.com/company/27090845 (string, optional)
+      - name: domain
+        in: query
+        required: false
+        schema:
+          type: string
+        description: The domain name of the company's website, e.g. example.com (string, optional)
+      - name: name
+        in: query
+        required: false
+        schema:
+          type: string
+        description: The name of the company (string, optional)
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+        description: Provides results for the given page (integer, optional)
+      - name: reveal_info
+        in: query
+        required: false
+        schema:
+          type: boolean
+          default: 'false'
+        description: 'If set to true, contact_info will contain the emails and phone numbers of the profile and credits will be charged (boolean, default: false)'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DecisionMakersResponse'
+        '400':
+          $ref: '#/components/responses/BadCredentials'
+        '401':
+          $ref: '#/components/responses/BadRequest'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+      x-cost:
+      - Consumes 1 search credit for each profile returned.
+      - Consumes 1 email/phone credit for every profile where email/phone info is found, if reveal_info=true is specified.
+components:
+  responses:
+    Forbidden:
+      description: 'You''re out of credits, please email your sales manager or book a meeting; or: No access to endpoint'
+    RateLimited:
+      description: 'Rate limit reached. Check header retry-after: <time_in_seconds> for when rate limit will reset'
+      headers:
+        retry-after:
+          schema:
+            type: integer
+          description: Seconds until the rate limit resets
+    BadCredentials:
+      description: Bad credentials or invalid headers
+    BadRequest:
+      description: Bad request or invalid input
+  schemas:
+    DecisionMakersResponse:
+      type: object
+      properties:
+        contact_info:
+          type: array
+          items: {}
+          description: Returns an array containing contact information including email and phone numbers (array)
+        contact_availability:
+          type: array
+          items: {}
+          description: Returns an array determining whether the profile contains the contact information (array)
+  securitySchemes:
+    apiToken:
+      type: apiKey
+      in: header
+      name: token
+      description: 'ContactOut uses API keys to allow access to the API. You can request an API key by booking a meeting. ContactOut expects the API key to be included in all API requests to the server in a header that looks like the following: token : <YOUR_API_TOKEN>'
+externalDocs:
+  url: https://api.contactout.com
+  description: ContactOut API Reference
+x-rate-limits:
+- 'People Search API: 60 requests per minute'
+- 'Contact Checker APIs: 150 requests per minute'
+- 'Other APIs: 1000 requests per minute'

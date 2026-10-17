@@ -1,0 +1,167 @@
+openapi: 3.2.0
+info:
+  title: ContactOut Email Verifier API
+  version: v1
+  summary: 'B2B contact data: people and company enrichment, search, contact checks, email verification, campaigns and usage stats.'
+  description: Welcome to ContactOut's API. Find anyone's email & phone number 10x faster with the most powerful sales and recruitment intelligence software available. (Generated from the published API reference at https://api.contactout.com; every operation carries x-source pointing at the section it was read from.)
+  contact:
+    name: ContactOut
+    url: https://contactout.com/meeting?utm_source=api_docs
+  termsOfService: https://contactout.com/terms
+  x-generated-from: documentation
+  x-generated-on: '2026-10-07'
+  x-generator: 'api-evangelist enrichment pass: deterministic parse of the Slate API reference HTML (headings, parameter tables, example blocks); the pipeline generator generate-contract-from-docs.py was run first and its path-collapse heuristic merged the literal resources linkedin/email/domain into a {v1id} template, so its output was replaced by this parse'
+servers:
+- url: https://api.contactout.com
+security:
+- apiToken: []
+tags:
+- name: Email Verifier API
+paths:
+  /v1/email/verify:
+    get:
+      summary: Single
+      tags:
+      - Email Verifier API
+      operationId: emailVerifierSingle
+      description: GET https://api.contactout.com/v1/email/verify?{email=}
+      x-source: https://api.contactout.com#email-verifier-http-request
+      x-section: Email Verifier API Single
+      parameters:
+      - name: email
+        in: query
+        required: true
+        schema:
+          type: string
+        description: Email Address (string, required)
+      responses:
+        '200':
+          description: Successful response
+        '400':
+          $ref: '#/components/responses/BadCredentials'
+        '401':
+          $ref: '#/components/responses/BadRequest'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+      x-cost:
+      - Consumes 1 “verifier” credit if result is either valid, invalid or accept_all
+  /v1/email/verify/batch:
+    post:
+      summary: Bulk
+      tags:
+      - Email Verifier API
+      operationId: emailVerifierBulk
+      description: 'POST https://api.contactout.com/v1/email/verify/batch
+
+        GET https://api.contactout.com/v1/email/verify/batch/{job_uuid}'
+      x-source: https://api.contactout.com#v1-bulk-email-verifier-http-request
+      x-section: Email Verifier API Bulk
+      parameters: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmailVerifierBulkResponse'
+        '400':
+          $ref: '#/components/responses/BadCredentials'
+        '401':
+          $ref: '#/components/responses/BadRequest'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmailVerifierBulkRequest'
+      x-cost:
+      - Consumes 1 “verifier” credit per email if result is either valid, invalid or accept_all
+  /v1/email/verify/batch/{jobUuid}:
+    get:
+      summary: Bulk (status)
+      tags:
+      - Email Verifier API
+      operationId: emailVerifierBulkGet
+      description: 'POST https://api.contactout.com/v1/email/verify/batch
+
+        GET https://api.contactout.com/v1/email/verify/batch/{job_uuid}'
+      x-source: https://api.contactout.com#v1-bulk-email-verifier-http-request
+      x-section: Email Verifier API Bulk
+      parameters:
+      - name: jobUuid
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+        '400':
+          $ref: '#/components/responses/BadCredentials'
+        '401':
+          $ref: '#/components/responses/BadRequest'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+      x-cost:
+      - Consumes 1 “verifier” credit per email if result is either valid, invalid or accept_all
+components:
+  responses:
+    Forbidden:
+      description: 'You''re out of credits, please email your sales manager or book a meeting; or: No access to endpoint'
+    RateLimited:
+      description: 'Rate limit reached. Check header retry-after: <time_in_seconds> for when rate limit will reset'
+      headers:
+        retry-after:
+          schema:
+            type: integer
+          description: Seconds until the rate limit resets
+    BadCredentials:
+      description: Bad credentials or invalid headers
+    BadRequest:
+      description: Bad request or invalid input
+  schemas:
+    EmailVerifierBulkRequest:
+      type: object
+      properties:
+        callback_url:
+          type: string
+          description: A URL where the results will be posted once the bulk email verification operation is completed. (String, optional)
+        emails:
+          type: array
+          items: {}
+          description: An array of email addresses (Array, required, Max:100)
+      required:
+      - emails
+    EmailVerifierBulkResponse:
+      type: object
+      properties:
+        uuid:
+          type: string
+          description: The unique identifier associated with the email verification request. (string)
+        status:
+          type: string
+          description: 'The status of the email verification process. "DONE": Indicates that the email verification process has been completed. (string)'
+        result:
+          type: object
+          description: An object containing the results of the email verification process, indexed by email addresses.Below are the possible values for verification statusvalid - the email address is valid.invalid - the email address is not valid. accept_all - the email address is valid but any email address is accepted by the server.disposable - the email address comes from a disposable email service provider.unknown we failed to verify the email address. (object)
+  securitySchemes:
+    apiToken:
+      type: apiKey
+      in: header
+      name: token
+      description: 'ContactOut uses API keys to allow access to the API. You can request an API key by booking a meeting. ContactOut expects the API key to be included in all API requests to the server in a header that looks like the following: token : <YOUR_API_TOKEN>'
+externalDocs:
+  url: https://api.contactout.com
+  description: ContactOut API Reference
+x-rate-limits:
+- 'People Search API: 60 requests per minute'
+- 'Contact Checker APIs: 150 requests per minute'
+- 'Other APIs: 1000 requests per minute'

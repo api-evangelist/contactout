@@ -1,0 +1,32 @@
+{
+  "provider": "contactout",
+  "sources": [
+    "_ae-authored/contactout-openapi-generated.yml"
+  ],
+  "outputs": [
+    "contactout-api-usage-stats-api-openapi.yml",
+    "contactout-campaigns-api-api-openapi.yml",
+    "contactout-company-search-api-api-openapi.yml",
+    "contactout-company-information-from-domains-api-openapi.yml",
+    "contactout-contact-checker-api-api-openapi.yml",
+    "contactout-contact-info-api-bulk-api-openapi.yml",
+    "contactout-contact-info-api-single-api-openapi.yml",
+    "contactout-decision-makers-api-api-openapi.yml",
+    "contactout-email-verifier-api-api-openapi.yml",
+    "contactout-email-to-linkedin-api-api-openapi.yml",
+    "contactout-hashed-email-api-api-openapi.yml",
+    "contactout-linkedin-profile-api-api-openapi.yml",
+    "contactout-people-count-api-api-openapi.yml",
+    "contactout-people-enrich-api-api-openapi.yml",
+    "contactout-people-search-api-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [
+    "sourced from openapi/_original/ (0 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "contactout-openapi-generated.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "apis.yml register: written (+15 apis, 15 total)"
+  ],
+  "skipped": []
+}

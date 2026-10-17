@@ -1,0 +1,337 @@
+openapi: 3.2.0
+info:
+  title: ContactOut Campaigns API
+  version: v1
+  summary: 'B2B contact data: people and company enrichment, search, contact checks, email verification, campaigns and usage stats.'
+  description: Welcome to ContactOut's API. Find anyone's email & phone number 10x faster with the most powerful sales and recruitment intelligence software available. (Generated from the published API reference at https://api.contactout.com; every operation carries x-source pointing at the section it was read from.)
+  contact:
+    name: ContactOut
+    url: https://contactout.com/meeting?utm_source=api_docs
+  termsOfService: https://contactout.com/terms
+  x-generated-from: documentation
+  x-generated-on: '2026-10-07'
+  x-generator: 'api-evangelist enrichment pass: deterministic parse of the Slate API reference HTML (headings, parameter tables, example blocks); the pipeline generator generate-contract-from-docs.py was run first and its path-collapse heuristic merged the literal resources linkedin/email/domain into a {v1id} template, so its output was replaced by this parse'
+servers:
+- url: https://api.contactout.com
+security:
+- apiToken: []
+tags:
+- name: Campaigns API
+paths:
+  /v1/campaigns:
+    get:
+      summary: List Campaigns
+      tags:
+      - Campaigns API
+      operationId: campaignsListCampaigns
+      description: GET https://api.contactout.com/v1/campaigns
+      x-source: https://api.contactout.com#campaigns-list-http-request
+      x-section: Campaigns API List Campaigns
+      parameters:
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: '1'
+        description: 'The page number to retrieve. (integer, optional, default: 1)'
+      - name: page_size
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: '25'
+        description: 'The number of campaigns to return per page. (integer, optional, default: 25, max:50)'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CampaignsListCampaignsResponse'
+        '400':
+          $ref: '#/components/responses/BadCredentials'
+        '401':
+          $ref: '#/components/responses/BadRequest'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+  /v1/campaigns/{campaignId}:
+    get:
+      summary: Get Campaign
+      tags:
+      - Campaigns API
+      operationId: campaignsGetCampaign
+      description: GET https://api.contactout.com/v1/campaigns/{campaign_id}
+      x-source: https://api.contactout.com#campaigns-show-http-request
+      x-section: Campaigns API Get Campaign
+      parameters:
+      - name: campaignId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The campaign_id of the campaign to retrieve. (string, required)
+      - name: include_stats
+        in: query
+        required: false
+        schema:
+          type: boolean
+          default: 'false'
+        description: 'If set to true, the response includes a stats object with campaign performance metrics. (boolean, optional, default: false)'
+      responses:
+        '200':
+          description: Successful response
+        '400':
+          $ref: '#/components/responses/BadCredentials'
+        '401':
+          $ref: '#/components/responses/BadRequest'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+  /v1/campaigns/{campaignId}/recipients:
+    post:
+      summary: Add Recipients
+      tags:
+      - Campaigns API
+      operationId: campaignsAddRecipients
+      description: POST https://api.contactout.com/v1/campaigns/{campaign_id}/recipients
+      x-source: https://api.contactout.com#campaigns-recipients-add-http-request
+      x-section: Campaigns API Add Recipients
+      parameters:
+      - name: campaignId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The campaign_id of the campaign to add recipients to. (string, required)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CampaignsAddRecipientsResponse'
+        '400':
+          $ref: '#/components/responses/BadCredentials'
+        '401':
+          $ref: '#/components/responses/BadRequest'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CampaignsAddRecipientsRequest'
+    delete:
+      summary: Remove Recipients
+      tags:
+      - Campaigns API
+      operationId: campaignsRemoveRecipients
+      description: DELETE https://api.contactout.com/v1/campaigns/{campaign_id}/recipients
+      x-source: https://api.contactout.com#campaigns-recipients-remove-http-request
+      x-section: Campaigns API Remove Recipients
+      parameters:
+      - name: campaignId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The campaign_id of the campaign to remove recipients from. (string, required)
+      responses:
+        '200':
+          description: Successful response
+        '400':
+          $ref: '#/components/responses/BadCredentials'
+        '401':
+          $ref: '#/components/responses/BadRequest'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CampaignsRemoveRecipientsRequest'
+  /v1/campaigns/{campaignId}/start:
+    post:
+      summary: Start Campaign
+      tags:
+      - Campaigns API
+      operationId: campaignsStartCampaign
+      description: POST https://api.contactout.com/v1/campaigns/{campaign_id}/start
+      x-source: https://api.contactout.com#campaigns-start-http-request
+      x-section: Campaigns API Start Campaign
+      parameters:
+      - name: campaignId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The campaign_id of the campaign to start. (string, required)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CampaignsStartCampaignResponse'
+              example:
+                status_code: 200
+                message: Campaign is already active.
+                data:
+                  id: pEVRKd
+                  status: active
+        '400':
+          $ref: '#/components/responses/BadCredentials'
+        '401':
+          $ref: '#/components/responses/BadRequest'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+  /v1/campaigns/{campaignId}/stop:
+    post:
+      summary: Stop Campaign
+      tags:
+      - Campaigns API
+      operationId: campaignsStopCampaign
+      description: POST https://api.contactout.com/v1/campaigns/{campaign_id}/stop
+      x-source: https://api.contactout.com#campaigns-stop-http-request
+      x-section: Campaigns API Stop Campaign
+      parameters:
+      - name: campaignId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The campaign_id of the campaign to stop. (string, required)
+      responses:
+        '200':
+          description: Successful response
+        '400':
+          $ref: '#/components/responses/BadCredentials'
+        '401':
+          $ref: '#/components/responses/BadRequest'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+components:
+  responses:
+    Forbidden:
+      description: 'You''re out of credits, please email your sales manager or book a meeting; or: No access to endpoint'
+    RateLimited:
+      description: 'Rate limit reached. Check header retry-after: <time_in_seconds> for when rate limit will reset'
+      headers:
+        retry-after:
+          schema:
+            type: integer
+          description: Seconds until the rate limit resets
+    BadCredentials:
+      description: Bad credentials or invalid headers
+    BadRequest:
+      description: Bad request or invalid input
+  schemas:
+    CampaignsListCampaignsResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items: {}
+          description: An array of campaign objects. See Campaign object. (array)
+        metadata:
+          type: object
+          description: Pagination details for the request. (object)
+        page:
+          type: integer
+          description: The current page number. (integer)
+        page_size:
+          type: integer
+          description: The number of campaigns returned per page. (integer)
+        total_results:
+          type: integer
+          description: The total number of campaigns available. (integer)
+        has_more:
+          type: boolean
+          description: Whether there are more pages of results. (boolean)
+    CampaignsStartCampaignResponse:
+      type: object
+      properties:
+        status_code:
+          type: integer
+        message:
+          type: string
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+            status:
+              type: string
+        data.id:
+          type: string
+          description: The campaign_id of the campaign. (string)
+        data.status:
+          type: string
+          description: The campaign status after the transition. (string)
+    CampaignsAddRecipientsRequest:
+      type: object
+      properties:
+        recipients:
+          type: array
+          items: {}
+          description: 'An array of recipient objects to add. Each object can contain: email (string, max:255), phone (string, max:255, must be a valid phone number), first_name (string, max:100), last_name (string, max:100), and company (string, max:100). Each recipient must include at least one contact identifier — email or phone — otherwise that recipient is returned as failed. The remaining fields are optional. (array, required, min:1, max:100)'
+      required:
+      - recipients
+    CampaignsRemoveRecipientsRequest:
+      type: object
+      properties:
+        recipients:
+          type: array
+          items: {}
+          description: An array of recipient objects to remove. Each object must contain an email (string, required, max:255) identifying the recipient to remove. (array, required, min:1, max:100)
+      required:
+      - recipients
+    CampaignsAddRecipientsResponse:
+      type: object
+      properties:
+        success_count:
+          type: integer
+          description: The number of recipients that were added successfully. (integer)
+        failure_count:
+          type: integer
+          description: The number of recipients that could not be added. (integer)
+        results:
+          type: array
+          items: {}
+          description: Per-recipient results. See below. (array)
+        email:
+          type: string
+          description: The recipient's email address. (string)
+        status:
+          type: string
+          description: The result for this recipient. One of success, warning, or failed. (string)
+        message:
+          type: string
+          description: A human-readable reason. Present for warning and failed results (e.g. Invalid email format, Recipient already enrolled). (string)
+  securitySchemes:
+    apiToken:
+      type: apiKey
+      in: header
+      name: token
+      description: 'ContactOut uses API keys to allow access to the API. You can request an API key by booking a meeting. ContactOut expects the API key to be included in all API requests to the server in a header that looks like the following: token : <YOUR_API_TOKEN>'
+externalDocs:
+  url: https://api.contactout.com
+  description: ContactOut API Reference
+x-rate-limits:
+- 'People Search API: 60 requests per minute'
+- 'Contact Checker APIs: 150 requests per minute'
+- 'Other APIs: 1000 requests per minute'

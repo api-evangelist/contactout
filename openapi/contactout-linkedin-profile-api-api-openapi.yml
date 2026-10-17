@@ -1,0 +1,147 @@
+openapi: 3.2.0
+info:
+  title: ContactOut LinkedIn Profile API
+  version: v1
+  summary: 'B2B contact data: people and company enrichment, search, contact checks, email verification, campaigns and usage stats.'
+  description: Welcome to ContactOut's API. Find anyone's email & phone number 10x faster with the most powerful sales and recruitment intelligence software available. (Generated from the published API reference at https://api.contactout.com; every operation carries x-source pointing at the section it was read from.)
+  contact:
+    name: ContactOut
+    url: https://contactout.com/meeting?utm_source=api_docs
+  termsOfService: https://contactout.com/terms
+  x-generated-from: documentation
+  x-generated-on: '2026-10-07'
+  x-generator: 'api-evangelist enrichment pass: deterministic parse of the Slate API reference HTML (headings, parameter tables, example blocks); the pipeline generator generate-contract-from-docs.py was run first and its path-collapse heuristic merged the literal resources linkedin/email/domain into a {v1id} template, so its output was replaced by this parse'
+servers:
+- url: https://api.contactout.com
+security:
+- apiToken: []
+tags:
+- name: LinkedIn Profile API
+paths:
+  /v1/linkedin/enrich:
+    get:
+      summary: from LinkedIn URL
+      tags:
+      - LinkedIn Profile API
+      operationId: linkedinProfileFromLinkedinUrl
+      description: GET https://api.contactout.com/v1/linkedin/enrich?{profile=}
+      x-source: https://api.contactout.com#enrich-linkedin-profile-http-request
+      x-section: LinkedIn Profile API from LinkedIn URL
+      parameters:
+      - name: profile
+        in: query
+        required: true
+        schema:
+          type: string
+        description: The fully formed URL of the LinkedIn profile. URL must begin with http and must contain linkedin.com/in/ or linkedin.com/pub/ (string, URL encoded, required)
+      - name: profile_only
+        in: query
+        required: false
+        schema:
+          type: boolean
+          default: 'false'
+        description: 'If set to true, returns the profile data without contact information. (boolean, optional, default: false)'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LinkedinProfileFromLinkedinUrlResponse'
+        '400':
+          $ref: '#/components/responses/BadCredentials'
+        '401':
+          $ref: '#/components/responses/BadRequest'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+      x-cost:
+      - Consumes 1 email credit if email is found and 1 phone credit if phone number is found.
+      - Consumes 1 search credit if profile_only is set to true or if there is no contact information available for the requested profile.
+  /v1/email/enrich:
+    get:
+      summary: from email address
+      tags:
+      - LinkedIn Profile API
+      operationId: linkedinProfileFromEmailAddress
+      description: GET https://api.contactout.com/v1/email/enrich?{email=}
+      x-source: https://api.contactout.com#enrich-email-http-request
+      x-section: LinkedIn Profile API from email address
+      parameters:
+      - name: email
+        in: query
+        required: true
+        schema:
+          type: string
+        description: Email Address (string, required)
+      - name: include
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Data to be returned. Currently support work_email (string, optional)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LinkedinProfileFromEmailAddressResponse'
+        '400':
+          $ref: '#/components/responses/BadCredentials'
+        '401':
+          $ref: '#/components/responses/BadRequest'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+      x-cost:
+      - Consumes 1 email credit if email is found and 1 phone credit if phone number is found.
+components:
+  responses:
+    Forbidden:
+      description: 'You''re out of credits, please email your sales manager or book a meeting; or: No access to endpoint'
+    RateLimited:
+      description: 'Rate limit reached. Check header retry-after: <time_in_seconds> for when rate limit will reset'
+      headers:
+        retry-after:
+          schema:
+            type: integer
+          description: Seconds until the rate limit resets
+    BadCredentials:
+      description: Bad credentials or invalid headers
+    BadRequest:
+      description: Bad request or invalid input
+  schemas:
+    LinkedinProfileFromLinkedinUrlResponse:
+      type: object
+      properties:
+        status_code:
+          type: integer
+          description: The HTTP status code of the response. Indicates the success or failure of the API request. (integer)
+        profile:
+          type: object
+          description: Contains profile details related to the URLurl - The URL of the LinkedIn profile.email - An array of email addresses associated with the profile.work_email - An array of work email addresses associated with the profile.personal_email An array of personal email addresses associated with the profile.phone - An array of phone numbers associated with the profile.github - An array of GitHub usernames associated with the profile.twitter - An array of Twitter usernames associated with the profile.full_name - The full name of the profile owner.headline The headline or job title of the profile owner.industry - The industry in which the profile owner works.company - An object containing information about the current company of the profile owner, including name, URL, website, and headquarters location.location - The location of the profile owner.summary - A summary or description of the profile owner's professional background.experience - An array of objects containing details about the profile owner's work experience, including start and end dates, job title, description, and company LinkedIn URL.education - An array of objects containing details about the profile owner's education, including institution name, major, start and end dates, degrees, and profile URL.skills - An array of skills associated with the profile owner.certifications - An array of objects containing the certifications of the profile. Includes details like certification name, company, authority, license number and date.publications - An array of objects containing the publications of the profile. Includes details like publication name, description and date.projects - An array of objects containing the project details of the profile. Includes details like the project title, description, start date/month and end date/month.volunteering_experiences - An array of objects containing the volunteering experience details of the profile. Includes details like the volunteer role, organization name, cause, start date/month and end date/month.followers - The number of LinkedIn followers the profile has.job_function - The functional area of the profile owner's current role (e.g., Engineering, Marketing, Sales).seniority - The seniority level of the profile owner's current role (e.g., Entry Level, Manager, Vice President).work_status - The current employment status of the profile owner ("open_to_work" or null).profile_picture_url - The URL of the profile picture of the profile owner.updated_at - The date and time when the profile was last updated. (object)
+    LinkedinProfileFromEmailAddressResponse:
+      type: object
+      properties:
+        status_code:
+          type: integer
+          description: The HTTP status code of the response. Indicates the success or failure of the API request. (integer)
+        profile:
+          type: object
+          description: object containing all profile details associated with the email address. Also includes phone number if available.email - The user's personal email address.workEmail - The user's work email address. (if include=work_email in request)workEmailStatus - The status of the work email address, whether it's verified or unverifiedfullName - The full name of the user.headline - The job title or professional headline of the user.industry - The industry in which the user works.linkedinUrl - The LinkedIn profile URL of the user.profilePictureUrl - The profile picture URL of the user.confidenceLevel - Confidence level in the accuracy of the profile information.altMatches - Alternative matches or suggestions related to the user's profile.phone - The user's phone number.twitter - The user's Twitter handle.github - The user's GitHub username.company - An object containing information about the user's current company.name - The name of the user's company.url - The LinkedIn URL of the company.website - The website URL of the company.headquarter- Location of the company's headquarters.locations - An array containing details of the company's locations.location - The current location of the user.summary - A brief summary of the user's professional experience and skills.experience - An array containing details of the user's work experience.education - An array containing details of the user's educational background.skills - An array containing the user's skills and expertise.certifications - An array of objects containing the certifications of the profile. Includes details like certification name, company, authority, license number and date.publications - An array of objects containing the publications of the profile. Includes details like publication name, description and date.projects - An array of objects containing the project details of the profile. Includes details like the project title, description, start date/month and end date/month.volunteeringExperiences - An array of objects containing the volunteering experience details of the profile. Includes details like the volunteer role, organization name, cause, start date/month and end date/month.followers - The number of LinkedIn followers the profile has.updatedAt - The date and time when the profile was last updated. (object)
+  securitySchemes:
+    apiToken:
+      type: apiKey
+      in: header
+      name: token
+      description: 'ContactOut uses API keys to allow access to the API. You can request an API key by booking a meeting. ContactOut expects the API key to be included in all API requests to the server in a header that looks like the following: token : <YOUR_API_TOKEN>'
+externalDocs:
+  url: https://api.contactout.com
+  description: ContactOut API Reference
+x-rate-limits:
+- 'People Search API: 60 requests per minute'
+- 'Contact Checker APIs: 150 requests per minute'
+- 'Other APIs: 1000 requests per minute'

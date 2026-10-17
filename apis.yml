@@ -102,22 +102,16 @@ common:
 - type: LLMsTxt
   url: https://contactout.com/llms.txt
 apis:
-- name: ContactOut API
-  description: 'REST API for B2B contact data: enrich LinkedIn profiles and email addresses with verified work and personal emails, phone numbers and profile details; search and count people by criteria; search companies and enrich domains; find decision makers; check whether an email or phone exists for a profile without revealing it; verify email deliverability singly or in batch (with a webhook callback); manage outreach campaigns; and read API usage stats and remaining credits. Authenticated with an API token header; credit-metered per result.'
+- aid: contactout:contactout-api-usage-stats-api
+  name: ContactOut API Usage Stats API
+  description: The API Usage Stats API from ContactOut — 1 operation(s) for api usage stats.
   humanURL: https://api.contactout.com
   baseURL: https://api.contactout.com
   tags:
-  - Contact Data
-  - Email Finder
-  - Data Enrichment
-  - People Search
-  - Company Search
-  - Email Verification
-  - Sales Intelligence
-  - Recruiting
+  - API Usage Stats
   properties:
   - type: OpenAPI
-    url: openapi/_ae-authored/contactout-openapi-generated.yml
+    url: openapi/contactout-api-usage-stats-api-openapi.yml
   - type: Documentation
     url: https://api.contactout.com
   - type: APIReference
@@ -134,8 +128,375 @@ apis:
     url: json-schema/contactout-company-search-request-schema.json
   - type: JSONSchema
     url: json-schema/contactout-company-information-from-domains-response-schema.json
-  aid: contactout:contactout-api-2
-  image: https://contactout.com/images/logo-square-200px.png
+- aid: contactout:contactout-campaigns-api-api
+  name: ContactOut Campaigns API
+  description: The Campaigns API API from ContactOut — 5 operation(s) for campaigns api.
+  humanURL: https://api.contactout.com
+  baseURL: https://api.contactout.com
+  tags:
+  - Campaigns API
+  properties:
+  - type: OpenAPI
+    url: openapi/contactout-campaigns-api-api-openapi.yml
+  - type: Documentation
+    url: https://api.contactout.com
+  - type: APIReference
+    url: https://api.contactout.com
+  - type: JSONSchema
+    url: json-schema/contactout-people-search-request-schema.json
+  - type: JSONSchema
+    url: json-schema/contactout-linkedin-profile-from-linkedin-url-response-schema.json
+  - type: JSONSchema
+    url: json-schema/contactout-linkedin-profile-from-email-address-response-schema.json
+  - type: JSONSchema
+    url: json-schema/contactout-people-enrich-response-schema.json
+  - type: JSONSchema
+    url: json-schema/contactout-company-search-request-schema.json
+  - type: JSONSchema
+    url: json-schema/contactout-company-information-from-domains-response-schema.json
+- aid: contactout:contactout-company-information-from-domains-api
+  name: ContactOut Company information from domains API
+  description: >-
+    The Company information from domains API from ContactOut — 1 operation(s) for company information
+    from domains.
+  humanURL: https://api.contactout.com
+  baseURL: https://api.contactout.com
+  tags:
+  - Company information from domains
+  properties:
+  - type: OpenAPI
+    url: openapi/contactout-company-information-from-domains-api-openapi.yml
+  - type: Documentation
+    url: https://api.contactout.com
+  - type: APIReference
+    url: https://api.contactout.com
+  - type: JSONSchema
+    url: json-schema/contactout-people-search-request-schema.json
+  - type: JSONSchema
+    url: json-schema/contactout-linkedin-profile-from-linkedin-url-response-schema.json
+  - type: JSONSchema
+    url: json-schema/contactout-linkedin-profile-from-email-address-response-schema.json
+  - type: JSONSchema
+    url: json-schema/contactout-people-enrich-response-schema.json
+  - type: JSONSchema
+    url: json-schema/contactout-company-search-request-schema.json
+  - type: JSONSchema
+    url: json-schema/contactout-company-information-from-domains-response-schema.json
+- aid: contactout:contactout-company-search-api-api
+  name: ContactOut Company Search API
+  description: The Company Search API API from ContactOut — 1 operation(s) for company search api.
+  humanURL: https://api.contactout.com
+  baseURL: https://api.contactout.com
+  tags:
+  - Company Search API
+  properties:
+  - type: OpenAPI
+    url: openapi/contactout-company-search-api-api-openapi.yml
+  - type: Documentation
+    url: https://api.contactout.com
+  - type: APIReference
+    url: https://api.contactout.com
+  - type: JSONSchema
+    url: json-schema/contactout-people-search-request-schema.json
+  - type: JSONSchema
+    url: json-schema/contactout-linkedin-profile-from-linkedin-url-response-schema.json
+  - type: JSONSchema
+    url: json-schema/contactout-linkedin-profile-from-email-address-response-schema.json
+  - type: JSONSchema
+    url: json-schema/contactout-people-enrich-response-schema.json
+  - type: JSONSchema
+    url: json-schema/contactout-company-search-request-schema.json
+  - type: JSONSchema
+    url: json-schema/contactout-company-information-from-domains-response-schema.json
+- aid: contactout:contactout-contact-checker-api-api
+  name: ContactOut Contact Checker API
+  description: The Contact Checker API API from ContactOut — 3 operation(s) for contact checker api.
+  humanURL: https://api.contactout.com
+  baseURL: https://api.contactout.com
+  tags:
+  - Contact Checker API
+  properties:
+  - type: OpenAPI
+    url: openapi/contactout-contact-checker-api-api-openapi.yml
+  - type: Documentation
+    url: https://api.contactout.com
+  - type: APIReference
+    url: https://api.contactout.com
+  - type: JSONSchema
+    url: json-schema/contactout-people-search-request-schema.json
+  - type: JSONSchema
+    url: json-schema/contactout-linkedin-profile-from-linkedin-url-response-schema.json
+  - type: JSONSchema
+    url: json-schema/contactout-linkedin-profile-from-email-address-response-schema.json
+  - type: JSONSchema
+    url: json-schema/contactout-people-enrich-response-schema.json
+  - type: JSONSchema
+    url: json-schema/contactout-company-search-request-schema.json
+  - type: JSONSchema
+    url: json-schema/contactout-company-information-from-domains-response-schema.json
+- aid: contactout:contactout-contact-info-api-bulk-api
+  name: ContactOut Contact Info API - Bulk API
+  description: >-
+    The Contact Info API - Bulk API from ContactOut — 3 operation(s) for contact info api - bulk.
+  humanURL: https://api.contactout.com
+  baseURL: https://api.contactout.com
+  tags:
+  - Contact Info API - Bulk
+  properties:
+  - type: OpenAPI
+    url: openapi/contactout-contact-info-api-bulk-api-openapi.yml
+  - type: Documentation
+    url: https://api.contactout.com
+  - type: APIReference
+    url: https://api.contactout.com
+  - type: JSONSchema
+    url: json-schema/contactout-people-search-request-schema.json
+  - type: JSONSchema
+    url: json-schema/contactout-linkedin-profile-from-linkedin-url-response-schema.json
+  - type: JSONSchema
+    url: json-schema/contactout-linkedin-profile-from-email-address-response-schema.json
+  - type: JSONSchema
+    url: json-schema/contactout-people-enrich-response-schema.json
+  - type: JSONSchema
+    url: json-schema/contactout-company-search-request-schema.json
+  - type: JSONSchema
+    url: json-schema/contactout-company-information-from-domains-response-schema.json
+- aid: contactout:contactout-contact-info-api-single-api
+  name: ContactOut Contact Info API - Single API
+  description: >-
+    The Contact Info API - Single API from ContactOut — 1 operation(s) for contact info api - single.
+  humanURL: https://api.contactout.com
+  baseURL: https://api.contactout.com
+  tags:
+  - Contact Info API - Single
+  properties:
+  - type: OpenAPI
+    url: openapi/contactout-contact-info-api-single-api-openapi.yml
+  - type: Documentation
+    url: https://api.contactout.com
+  - type: APIReference
+    url: https://api.contactout.com
+  - type: JSONSchema
+    url: json-schema/contactout-people-search-request-schema.json
+  - type: JSONSchema
+    url: json-schema/contactout-linkedin-profile-from-linkedin-url-response-schema.json
+  - type: JSONSchema
+    url: json-schema/contactout-linkedin-profile-from-email-address-response-schema.json
+  - type: JSONSchema
+    url: json-schema/contactout-people-enrich-response-schema.json
+  - type: JSONSchema
+    url: json-schema/contactout-company-search-request-schema.json
+  - type: JSONSchema
+    url: json-schema/contactout-company-information-from-domains-response-schema.json
+- aid: contactout:contactout-decision-makers-api-api
+  name: ContactOut Decision Makers API
+  description: The Decision Makers API API from ContactOut — 1 operation(s) for decision makers api.
+  humanURL: https://api.contactout.com
+  baseURL: https://api.contactout.com
+  tags:
+  - Decision Makers API
+  properties:
+  - type: OpenAPI
+    url: openapi/contactout-decision-makers-api-api-openapi.yml
+  - type: Documentation
+    url: https://api.contactout.com
+  - type: APIReference
+    url: https://api.contactout.com
+  - type: JSONSchema
+    url: json-schema/contactout-people-search-request-schema.json
+  - type: JSONSchema
+    url: json-schema/contactout-linkedin-profile-from-linkedin-url-response-schema.json
+  - type: JSONSchema
+    url: json-schema/contactout-linkedin-profile-from-email-address-response-schema.json
+  - type: JSONSchema
+    url: json-schema/contactout-people-enrich-response-schema.json
+  - type: JSONSchema
+    url: json-schema/contactout-company-search-request-schema.json
+  - type: JSONSchema
+    url: json-schema/contactout-company-information-from-domains-response-schema.json
+- aid: contactout:contactout-email-to-linkedin-api-api
+  name: ContactOut Email to LinkedIn API
+  description: >-
+    The Email to LinkedIn API API from ContactOut — 1 operation(s) for email to linkedin api.
+  humanURL: https://api.contactout.com
+  baseURL: https://api.contactout.com
+  tags:
+  - Email to LinkedIn API
+  properties:
+  - type: OpenAPI
+    url: openapi/contactout-email-to-linkedin-api-api-openapi.yml
+  - type: Documentation
+    url: https://api.contactout.com
+  - type: APIReference
+    url: https://api.contactout.com
+  - type: JSONSchema
+    url: json-schema/contactout-people-search-request-schema.json
+  - type: JSONSchema
+    url: json-schema/contactout-linkedin-profile-from-linkedin-url-response-schema.json
+  - type: JSONSchema
+    url: json-schema/contactout-linkedin-profile-from-email-address-response-schema.json
+  - type: JSONSchema
+    url: json-schema/contactout-people-enrich-response-schema.json
+  - type: JSONSchema
+    url: json-schema/contactout-company-search-request-schema.json
+  - type: JSONSchema
+    url: json-schema/contactout-company-information-from-domains-response-schema.json
+- aid: contactout:contactout-email-verifier-api-api
+  name: ContactOut Email Verifier API
+  description: The Email Verifier API API from ContactOut — 3 operation(s) for email verifier api.
+  humanURL: https://api.contactout.com
+  baseURL: https://api.contactout.com
+  tags:
+  - Email Verifier API
+  properties:
+  - type: OpenAPI
+    url: openapi/contactout-email-verifier-api-api-openapi.yml
+  - type: Documentation
+    url: https://api.contactout.com
+  - type: APIReference
+    url: https://api.contactout.com
+  - type: JSONSchema
+    url: json-schema/contactout-people-search-request-schema.json
+  - type: JSONSchema
+    url: json-schema/contactout-linkedin-profile-from-linkedin-url-response-schema.json
+  - type: JSONSchema
+    url: json-schema/contactout-linkedin-profile-from-email-address-response-schema.json
+  - type: JSONSchema
+    url: json-schema/contactout-people-enrich-response-schema.json
+  - type: JSONSchema
+    url: json-schema/contactout-company-search-request-schema.json
+  - type: JSONSchema
+    url: json-schema/contactout-company-information-from-domains-response-schema.json
+- aid: contactout:contactout-hashed-email-api-api
+  name: ContactOut Hashed Email API
+  description: The Hashed Email API API from ContactOut — 1 operation(s) for hashed email api.
+  humanURL: https://api.contactout.com
+  baseURL: https://api.contactout.com
+  tags:
+  - Hashed Email API
+  properties:
+  - type: OpenAPI
+    url: openapi/contactout-hashed-email-api-api-openapi.yml
+  - type: Documentation
+    url: https://api.contactout.com
+  - type: APIReference
+    url: https://api.contactout.com
+  - type: JSONSchema
+    url: json-schema/contactout-people-search-request-schema.json
+  - type: JSONSchema
+    url: json-schema/contactout-linkedin-profile-from-linkedin-url-response-schema.json
+  - type: JSONSchema
+    url: json-schema/contactout-linkedin-profile-from-email-address-response-schema.json
+  - type: JSONSchema
+    url: json-schema/contactout-people-enrich-response-schema.json
+  - type: JSONSchema
+    url: json-schema/contactout-company-search-request-schema.json
+  - type: JSONSchema
+    url: json-schema/contactout-company-information-from-domains-response-schema.json
+- aid: contactout:contactout-linkedin-profile-api-api
+  name: ContactOut LinkedIn Profile API
+  description: The LinkedIn Profile API API from ContactOut — 2 operation(s) for linkedin profile api.
+  humanURL: https://api.contactout.com
+  baseURL: https://api.contactout.com
+  tags:
+  - LinkedIn Profile API
+  properties:
+  - type: OpenAPI
+    url: openapi/contactout-linkedin-profile-api-api-openapi.yml
+  - type: Documentation
+    url: https://api.contactout.com
+  - type: APIReference
+    url: https://api.contactout.com
+  - type: JSONSchema
+    url: json-schema/contactout-people-search-request-schema.json
+  - type: JSONSchema
+    url: json-schema/contactout-linkedin-profile-from-linkedin-url-response-schema.json
+  - type: JSONSchema
+    url: json-schema/contactout-linkedin-profile-from-email-address-response-schema.json
+  - type: JSONSchema
+    url: json-schema/contactout-people-enrich-response-schema.json
+  - type: JSONSchema
+    url: json-schema/contactout-company-search-request-schema.json
+  - type: JSONSchema
+    url: json-schema/contactout-company-information-from-domains-response-schema.json
+- aid: contactout:contactout-people-count-api-api
+  name: ContactOut People Count API
+  description: The People Count API API from ContactOut — 1 operation(s) for people count api.
+  humanURL: https://api.contactout.com
+  baseURL: https://api.contactout.com
+  tags:
+  - People Count API
+  properties:
+  - type: OpenAPI
+    url: openapi/contactout-people-count-api-api-openapi.yml
+  - type: Documentation
+    url: https://api.contactout.com
+  - type: APIReference
+    url: https://api.contactout.com
+  - type: JSONSchema
+    url: json-schema/contactout-people-search-request-schema.json
+  - type: JSONSchema
+    url: json-schema/contactout-linkedin-profile-from-linkedin-url-response-schema.json
+  - type: JSONSchema
+    url: json-schema/contactout-linkedin-profile-from-email-address-response-schema.json
+  - type: JSONSchema
+    url: json-schema/contactout-people-enrich-response-schema.json
+  - type: JSONSchema
+    url: json-schema/contactout-company-search-request-schema.json
+  - type: JSONSchema
+    url: json-schema/contactout-company-information-from-domains-response-schema.json
+- aid: contactout:contactout-people-enrich-api-api
+  name: ContactOut People Enrich API
+  description: The People Enrich API API from ContactOut — 1 operation(s) for people enrich api.
+  humanURL: https://api.contactout.com
+  baseURL: https://api.contactout.com
+  tags:
+  - People Enrich API
+  properties:
+  - type: OpenAPI
+    url: openapi/contactout-people-enrich-api-api-openapi.yml
+  - type: Documentation
+    url: https://api.contactout.com
+  - type: APIReference
+    url: https://api.contactout.com
+  - type: JSONSchema
+    url: json-schema/contactout-people-search-request-schema.json
+  - type: JSONSchema
+    url: json-schema/contactout-linkedin-profile-from-linkedin-url-response-schema.json
+  - type: JSONSchema
+    url: json-schema/contactout-linkedin-profile-from-email-address-response-schema.json
+  - type: JSONSchema
+    url: json-schema/contactout-people-enrich-response-schema.json
+  - type: JSONSchema
+    url: json-schema/contactout-company-search-request-schema.json
+  - type: JSONSchema
+    url: json-schema/contactout-company-information-from-domains-response-schema.json
+- aid: contactout:contactout-people-search-api-api
+  name: ContactOut People Search API
+  description: The People Search API API from ContactOut — 1 operation(s) for people search api.
+  humanURL: https://api.contactout.com
+  baseURL: https://api.contactout.com
+  tags:
+  - People Search API
+  properties:
+  - type: OpenAPI
+    url: openapi/contactout-people-search-api-api-openapi.yml
+  - type: Documentation
+    url: https://api.contactout.com
+  - type: APIReference
+    url: https://api.contactout.com
+  - type: JSONSchema
+    url: json-schema/contactout-people-search-request-schema.json
+  - type: JSONSchema
+    url: json-schema/contactout-linkedin-profile-from-linkedin-url-response-schema.json
+  - type: JSONSchema
+    url: json-schema/contactout-linkedin-profile-from-email-address-response-schema.json
+  - type: JSONSchema
+    url: json-schema/contactout-people-enrich-response-schema.json
+  - type: JSONSchema
+    url: json-schema/contactout-company-search-request-schema.json
+  - type: JSONSchema
+    url: json-schema/contactout-company-information-from-domains-response-schema.json
 x-coverage:
   state: covered
   reason: covered

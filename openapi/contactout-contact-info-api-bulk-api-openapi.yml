@@ -1,0 +1,231 @@
+openapi: 3.2.0
+info:
+  title: ContactOut Contact Info API - Bulk API
+  version: v1
+  summary: 'B2B contact data: people and company enrichment, search, contact checks, email verification, campaigns and usage stats.'
+  description: Welcome to ContactOut's API. Find anyone's email & phone number 10x faster with the most powerful sales and recruitment intelligence software available. (Generated from the published API reference at https://api.contactout.com; every operation carries x-source pointing at the section it was read from.)
+  contact:
+    name: ContactOut
+    url: https://contactout.com/meeting?utm_source=api_docs
+  termsOfService: https://contactout.com/terms
+  x-generated-from: documentation
+  x-generated-on: '2026-10-07'
+  x-generator: 'api-evangelist enrichment pass: deterministic parse of the Slate API reference HTML (headings, parameter tables, example blocks); the pipeline generator generate-contract-from-docs.py was run first and its path-collapse heuristic merged the literal resources linkedin/email/domain into a {v1id} template, so its output was replaced by this parse'
+servers:
+- url: https://api.contactout.com
+security:
+- apiToken: []
+tags:
+- name: Contact Info API - Bulk
+paths:
+  /v1/people/linkedin/batch:
+    post:
+      summary: V1 Bulk ContactInfo
+      tags:
+      - Contact Info API - Bulk
+      operationId: contactInfoBulkV1BulkContactinfo
+      description: POST https://api.contactout.com/v1/people/linkedin/batch
+      x-source: https://api.contactout.com#v1-bulk-contactinfo-http-request
+      x-section: Contact Info API - Bulk V1 Bulk ContactInfo
+      parameters: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContactInfoBulkV1BulkContactinfoResponse'
+        '400':
+          $ref: '#/components/responses/BadCredentials'
+        '401':
+          $ref: '#/components/responses/BadRequest'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContactInfoBulkV1BulkContactinfoRequest'
+  /v2/people/linkedin/batch:
+    post:
+      summary: V2 Bulk ContactInfo
+      tags:
+      - Contact Info API - Bulk
+      operationId: contactInfoBulkV2BulkContactinfo
+      description: 'POST https://api.contactout.com/v2/people/linkedin/batch
+
+        Initiate a bulk contact info lookup.'
+      x-source: https://api.contactout.com#v2-bulk-contactinfo-post-http-request
+      x-section: Contact Info API - Bulk V2 Bulk ContactInfo
+      parameters: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContactInfoBulkV2BulkContactinfoResponse'
+        '400':
+          $ref: '#/components/responses/BadCredentials'
+        '401':
+          $ref: '#/components/responses/BadRequest'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContactInfoBulkV2BulkContactinfoRequest'
+      callbacks:
+        callbackUrl:
+          '{$request.body#/callback_url}':
+            post:
+              summary: Job result delivered to callback_url
+              description: When you include a callback_url in your initial POST request, we deliver the results to that URL automatically once the job finishes. The payload is sent as a POST request with a JSON body containing the fields below.
+              requestBody:
+                content:
+                  application/json:
+                    schema:
+                      type: object
+                      properties:
+                        job_id:
+                          type: string
+                          description: The same job_id returned by the initial POST response. Use this to match the webhook delivery to the original request. (string)
+                        profiles:
+                          type: object
+                          description: An object containing multiple LinkedIn profiles and their associated contact information.emails - An array of all email addresses associated with the LinkedIn profile.personal_emails - An array of personal email addresses associated with the LinkedIn profile.work_emails - An array of work email addresses associated with the LinkedIn profile.phones - An array of phone numbers associated with the LinkedIn profile (if include_phone is true). (object)
+              responses:
+                '200':
+                  description: Your endpoint acknowledges the delivery
+  /v2/people/linkedin/batch/{jobId}:
+    get:
+      summary: V2 Bulk ContactInfo
+      tags:
+      - Contact Info API - Bulk
+      operationId: contactInfoBulkV2BulkContactinfoGet
+      description: 'GET https://api.contactout.com/v2/people/linkedin/batch/{job_id}
+
+        Check job status and retrieve contact info results using the job_id.'
+      x-source: https://api.contactout.com#v2-bulk-contactinfo-get-http-request
+      x-section: Contact Info API - Bulk V2 Bulk ContactInfo
+      parameters:
+      - name: jobId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContactInfoBulkV2BulkContactinfoGetResponse'
+        '400':
+          $ref: '#/components/responses/BadCredentials'
+        '401':
+          $ref: '#/components/responses/BadRequest'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+components:
+  responses:
+    Forbidden:
+      description: 'You''re out of credits, please email your sales manager or book a meeting; or: No access to endpoint'
+    RateLimited:
+      description: 'Rate limit reached. Check header retry-after: <time_in_seconds> for when rate limit will reset'
+      headers:
+        retry-after:
+          schema:
+            type: integer
+          description: Seconds until the rate limit resets
+    BadCredentials:
+      description: Bad credentials or invalid headers
+    BadRequest:
+      description: Bad request or invalid input
+  schemas:
+    ContactInfoBulkV1BulkContactinfoRequest:
+      type: object
+      properties:
+        profiles:
+          type: array
+          items: {}
+          description: An array of LinkedIn profile URLs. URL must begin with http and must contain linkedin.com/in/ or linkedin.com/pub/ (Array, required, max:100)
+        include_phone:
+          type: boolean
+          default: 'false'
+          description: 'If set to true, phone numbers will be included in the response if available. Requires phone credits. (Boolean, optional, default: false)'
+        email_type:
+          type: string
+          description: email_type=personal — Returns only personal emails  email_type=work — Returns only work emails  email_type=personal,work — Returns both personal and work emails  By default, both personal and work emails are returned. (string, optional)
+      required:
+      - profiles
+    ContactInfoBulkV1BulkContactinfoResponse:
+      type: object
+      properties:
+        status_code:
+          type: integer
+          description: The HTTP status code of the response. Indicates the success or failure of the API request. (integer)
+        profiles:
+          type: object
+          description: Keys are LinkedIn profile URLs from the request.If include_phone is false or omitted, each value is an array of email addresses.If include_phone is true, each value is an object with emails and phones arrays.Inputs that omit http or fail validation still return an entry using the matching array or object shape above. (object)
+    ContactInfoBulkV2BulkContactinfoResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          description: The initial job status (e.g., QUEUED). (string)
+        job_id:
+          type: string
+          description: The unique identifier for the bulk job. (string)
+    ContactInfoBulkV2BulkContactinfoGetResponse:
+      type: object
+      properties:
+        uuid:
+          type: string
+          description: The unique identifier for the bulk job. This is the same value as job_id from the POST response. Use it to call GET https://api.contactout.com/v2/people/linkedin/batch/{job_id}. (string)
+        status:
+          type: string
+          description: The status of the email lookup request (e.g., SENT indicating the request has been sent) (string)
+        result:
+          type: object
+          description: An object containing multiple LinkedIn profiles and their associated contact information.emails - An array of all email addresses associated with the LinkedIn profile.personal_emails - An array of personal email addresses associated with the LinkedIn profile.work_emails - An array of work email addresses associated with the LinkedIn profile.phones - An array of phone numbers associated with the LinkedIn profile (if include_phone is true). (object)
+    ContactInfoBulkV2BulkContactinfoRequest:
+      type: object
+      properties:
+        callback_url:
+          type: string
+          description: A URL where the results will be posted once the enrichment operation is completed. (String, optional)
+        profiles:
+          type: array
+          items: {}
+          description: An array of LinkedIn profile URLs. URL must begin with http and must contain linkedin.com/in/ or linkedin.com/pub/ (Array, required, Max:1000)
+        include_phone:
+          type: boolean
+          default: 'false'
+          description: 'If set to true, phone numbers will be included in the response if available. Requires phone credits. (Boolean, optional, default: false)'
+        email_type:
+          type: string
+          description: email_type=personal — Returns only personal emails  email_type=work — Returns only work emails  email_type=personal,work — Returns both personal and work emails  email_type=none — Returns no emails and consumes no email credits  By default, both personal and work emails are returned. (string, optional)
+      required:
+      - profiles
+  securitySchemes:
+    apiToken:
+      type: apiKey
+      in: header
+      name: token
+      description: 'ContactOut uses API keys to allow access to the API. You can request an API key by booking a meeting. ContactOut expects the API key to be included in all API requests to the server in a header that looks like the following: token : <YOUR_API_TOKEN>'
+externalDocs:
+  url: https://api.contactout.com
+  description: ContactOut API Reference
+x-rate-limits:
+- 'People Search API: 60 requests per minute'
+- 'Contact Checker APIs: 150 requests per minute'
+- 'Other APIs: 1000 requests per minute'

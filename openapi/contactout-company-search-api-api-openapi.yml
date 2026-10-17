@@ -1,0 +1,140 @@
+openapi: 3.2.0
+info:
+  title: ContactOut Company Search API
+  version: v1
+  summary: 'B2B contact data: people and company enrichment, search, contact checks, email verification, campaigns and usage stats.'
+  description: Welcome to ContactOut's API. Find anyone's email & phone number 10x faster with the most powerful sales and recruitment intelligence software available. (Generated from the published API reference at https://api.contactout.com; every operation carries x-source pointing at the section it was read from.)
+  contact:
+    name: ContactOut
+    url: https://contactout.com/meeting?utm_source=api_docs
+  termsOfService: https://contactout.com/terms
+  x-generated-from: documentation
+  x-generated-on: '2026-10-07'
+  x-generator: 'api-evangelist enrichment pass: deterministic parse of the Slate API reference HTML (headings, parameter tables, example blocks); the pipeline generator generate-contract-from-docs.py was run first and its path-collapse heuristic merged the literal resources linkedin/email/domain into a {v1id} template, so its output was replaced by this parse'
+servers:
+- url: https://api.contactout.com
+security:
+- apiToken: []
+tags:
+- name: Company Search API
+paths:
+  /v1/company/search:
+    post:
+      summary: Company Search API
+      tags:
+      - Company Search API
+      operationId: companySearch
+      description: POST https://api.contactout.com/v1/company/search
+      x-source: https://api.contactout.com#company-profiles-http-request
+      x-section: Company Search API
+      parameters: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompanySearchResponse'
+        '400':
+          $ref: '#/components/responses/BadCredentials'
+        '401':
+          $ref: '#/components/responses/BadRequest'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompanySearchRequest'
+      x-cost:
+      - Consumes 1 search credit for each company returned.
+components:
+  responses:
+    Forbidden:
+      description: 'You''re out of credits, please email your sales manager or book a meeting; or: No access to endpoint'
+    RateLimited:
+      description: 'Rate limit reached. Check header retry-after: <time_in_seconds> for when rate limit will reset'
+      headers:
+        retry-after:
+          schema:
+            type: integer
+          description: Seconds until the rate limit resets
+    BadCredentials:
+      description: Bad credentials or invalid headers
+    BadRequest:
+      description: Bad request or invalid input
+  schemas:
+    CompanySearchRequest:
+      type: object
+      properties:
+        linkedin_url:
+          type: array
+          items: {}
+          description: 'Accepts an array of company URLs. Acceptable inputs: www.linkedin.com/company/contactout, contactout, https://www.linkedin.com/company/27927, 27927. Cannot be used with other search filters. (array, max:25)'
+        name:
+          type: array
+          items: {}
+          description: Accepts an array of company names (array, max:50)
+        domain:
+          type: array
+          items: {}
+          description: Accepts an array of company domains (array, max:50)
+        size:
+          type: array
+          items: {}
+          description: Company size by number of employees. Accepted values list (array)
+        hq_only:
+          type: boolean
+          description: Filter search locations by headquarters only (boolean)
+        location:
+          type: array
+          items: {}
+          description: Accepts an array of locations (array, max:50)
+        industries:
+          type: array
+          items: {}
+          description: Accepts an array of industries. Accepted values list (array, max:50)
+        technologies:
+          type: array
+          items: {}
+          description: Accepts an array of technology names (array, max:50)
+        min_revenue:
+          type: integer
+          description: Minimum revenue of the company Accepted values list (integer)
+        max_revenue:
+          type: integer
+          description: Maximum revenue of the company Accepted values list (integer)
+        year_founded_from:
+          type: integer
+          description: Minimum year founded of the company (integer, min:1985)
+        year_founded_to:
+          type: integer
+          description: 'Maximum year founded of the company. Requires year_founded_from. (integer, max: current year)'
+      required:
+      - technologies
+    CompanySearchResponse:
+      type: object
+      properties:
+        status_code:
+          type: integer
+          description: The HTTP status code of the response. Indicates the success or failure of the API request. (integer)
+        companies:
+          type: array
+          items: {}
+          description: Contains company profile details that matched the search.name - Name of the company.url - The LinkedIn URL of the company.domain - Domain name of the company.email_domain - Email domain of the company.overview - Brief description of the company.type - Type of the company (e.g., Privately Held, Public).size - Size of the company (e.g., number of employees).country - Country where the company is located.revenue - Revenue of the companyfounded_at - Year the company was founded.industry - Industry in which the company operates.headquarter - Headquarters location of the company.website - URL of the company's website.location - The location of the company.logo_url - The URL of the company logo.specialties - Specialties or areas of expertise of the company.technologies - Array of technologies used by the company.locations - Array containing locations where the company operates.employees - Number of employees on LinkedIn.followers - Number of LinkedIn followers.funding - Funding summary object. Contains total_funding_usd, rounds, funding_status, latest_date, number_of_funding_rounds. (array)
+  securitySchemes:
+    apiToken:
+      type: apiKey
+      in: header
+      name: token
+      description: 'ContactOut uses API keys to allow access to the API. You can request an API key by booking a meeting. ContactOut expects the API key to be included in all API requests to the server in a header that looks like the following: token : <YOUR_API_TOKEN>'
+externalDocs:
+  url: https://api.contactout.com
+  description: ContactOut API Reference
+x-rate-limits:
+- 'People Search API: 60 requests per minute'
+- 'Contact Checker APIs: 150 requests per minute'
+- 'Other APIs: 1000 requests per minute'
